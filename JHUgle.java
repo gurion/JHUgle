@@ -3,108 +3,133 @@
 
 import java.util.Scanner;
 import java.io.FileReader;
-import java.util.StringTokenizer;
-import java.util.HashSet;
-import java.util.Stack;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Stack;
 
 public final class JHUgle {
-
-    private static final float MAXLOAD = 0.8;
 
     /** Make checkstyle happy. */
     private JHUgle() {
     }
 
-    static Scanner keys = new Scanner(System.in);
+    private static AvlTreeMap<String, ArrayList<String>> map = new AvlTreeMap<>();
+       
+    /**
+     * Main method.
+     * @param args Command line arguments (ignored).
+     * @throws IOException in the unlikely event of a loss of input pressure.
+     */
+    public static void main(String[] args) throws IOException {
+		readInput(args[0]);
+		System.out.println("Index Created");
 
-    public static void main(String[] args) {
-        HashMap<K, V> inputMap = readMap(args);
-        System.out.println("Index Created");
+		Stack<ArrayList<String>> search = new Stack<>();
+		boolean quit = false;
+		Scanner kb = new Scanner(System.in);
 
-        String input = "";
-        boolean quit = false;
-        HashSet<String> urls1 = null;
-	Stack<HashSet<String>> output = new Stack();
+		while (!quit) {
+			System.out.print(">");
 
-
-        while (!quit && keys.hasNext()) {
-
-	    System.out.println("> ");
-            input = keys.next();
-
-            if (("?").equals(input)) {
-
-		if (output.peek().size() == 0) {
-		    System.out.println("Error: empty stack");
-		}
-		else {
-		    System.out.println(output.peek());
-                }
-
-	    }
-            else if (("&&").equals(input)) {
-
-		urls1 = output.pop();
-                HashSet<String> urls2 = output.pop();
-                urls1.retainAll(urls2);
-                output.push(urls1);
-		
-            }
-            else if (("||").equals(input)) {
-		urls1 = output.pop();
-                HashSet<String> urls2 = output.pop();
-                urls1.addAll(urls2);
-                output.push(urls1);
-
-	    }
-            else if (("!").equals(input)) {
-                quit = true;
-            }
-            else {
-		if (hashMap.hasKey(input)) {
-		    HashSet<String> urls = hashMap.get(input);
-                    output.push(urls);
-                }
-		else {
-		    System.out.println("Error: not found");
-                }
-            }
-        }
-
-
+			String command = kb.next();
+			System.out.print(command);
+			ArrayList<String> urls = new ArrayList<>();
+		    ArrayList<String> one = new ArrayList<>();
+		    ArrayList<String> two = new ArrayList<>();
+		    switch(command) {
+		    	case "?":
+		    		urls = search.peek();
+		    		for (String s : urls) {
+		    			System.out.println(s);
+		    		}
+		    		break;
+		    	case "&&":
+        			one = search.pop();
+        			two = search.pop();
+        			for (String s : one) {
+        				if (two.contains(s)) {
+        					urls.add(s);
+        				}
+        			}
+        			search.push(urls);
+		    		break;
+		    	case "||":
+        			one = search.pop();
+        			two = search.pop();
+        			for (String s : one) {
+        				urls.add(s);
+        			}
+        			for (String s : two) {
+        				if (!urls.contains(s)) {
+        					urls.add(s);
+        				}
+        			}
+        			search.push(urls);
+		    		break;
+		    	case "!":
+		    		quit = true;
+		    		break;
+		    	default:
+		    		if (map.has(command)) {
+		    			urls = map.get(command); 
+		    			search.push(urls);
+		    		}
+		    		break;
+			}
+		}		
     }
 
-    public static void readInput(String filename) {
+    public static void readInput(String filename) throws IOException {
+	    // The regular expression splits strings on whitespace, non-digit,
+        // and non-letter characters (anything except 0-9, a-z, and A-Z).
+        // Far from perfect, but close enough for this simple program.
+        Pattern pattern = Pattern.compile("[\\s+]");
 
-	HashMap<K, V> returnMap = new HashMap<K, V>(MAXLOAD);
-	Scanner inFile = new Scanner(new FileReader(filename));
+        // If you're wondering why we're not using Scanner instead, you're
+        // welcome to try out what happens... :-)
+        InputStream inputStream = new FileInputStream(filename);
+        InputStreamReader input = new InputStreamReader(inputStream);
+        BufferedReader reader = new BufferedReader(input);
 
-	int count = 0;
+        int lineCount = 1;
+        String line;
         String url = "";
-
-	while (inFile.hasNextLine()) {
-	    if (count % 2 == 0) {
-                url = inFile.nextLine();
-            }
-	    else {
-		String line = inFile.nextLine();
-                StringTokenizer s = new StringTokenizer(line);
-                while (s.hasMoreTokens()) {
-                    String word = s.nextToken();
-                    if (!returnMap.hasKey(word)) {
-                        returnMap.put(word, new HashSet<String>());
-                    }
-                    returnMap.get(word).add(url);
-                }
-            }
-	    
-            count++;
+        while ((line = reader.readLine()) != null) {
+        	if ((lineCount % 2) != 0) {
+				url = line;
+			} else {
+        		String[] words = pattern.split(line);
+ 	        	for (String word : words) {
+    	    		if (map.has(word)) {
+    	    			ArrayList<String> temp = map.get(word);
+    	    			temp.add(url);
+    	    		} else {
+    	    			ArrayList<String> list = new ArrayList<>();
+    	    			list.add(url);
+    	    			map.insert(word, list);
+    	    		}
+        		}
+        	}
         }
-	
-        inFile.close();
-	
-	return returnMap;
     }
-    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
