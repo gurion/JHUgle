@@ -26,6 +26,7 @@ public final class JHUgle {
      * @throws IOException in the unlikely event of a loss of input pressure.
      */
     public static void main(String[] args) throws IOException {
+		//read input
 		readInput(args[0]);
 		System.out.println("Index Created");
 
@@ -36,19 +37,26 @@ public final class JHUgle {
 		while (!quit) {
 			System.out.print(">");
 
+			//Instantiate Lists
 			String command = kb.next();
-			System.out.print(command);
 			ArrayList<String> urls = new ArrayList<>();
 		    ArrayList<String> one = new ArrayList<>();
 		    ArrayList<String> two = new ArrayList<>();
+
 		    switch(command) {
+		    	//Print top of stack
 		    	case "?":
+		    		//TO DO:
+		    		//HANDLE EMPTY STACK
 		    		urls = search.peek();
 		    		for (String s : urls) {
 		    			System.out.println(s);
 		    		}
 		    		break;
+		    	//intersect top two elements of stack and push result
 		    	case "&&":
+		    		//TO DO:
+		    		//HANDLE EMPTY STACK
         			one = search.pop();
         			two = search.pop();
         			for (String s : one) {
@@ -58,7 +66,10 @@ public final class JHUgle {
         			}
         			search.push(urls);
 		    		break;
+		    	//union top two elements of stack and push result
 		    	case "||":
+		    		//TO DO:
+		    		//HANDLE EMPTY STACK		    	
         			one = search.pop();
         			two = search.pop();
         			for (String s : one) {
@@ -71,9 +82,11 @@ public final class JHUgle {
         			}
         			search.push(urls);
 		    		break;
+		    	//quit
 		    	case "!":
 		    		quit = true;
 		    		break;
+		    	//push a new keyword's url list
 		    	default:
 		    		if (map.has(command)) {
 		    			urls = map.get(command); 
@@ -84,37 +97,30 @@ public final class JHUgle {
 		}		
     }
 
-    public static void readInput(String filename) throws IOException {
-	    // The regular expression splits strings on whitespace, non-digit,
-        // and non-letter characters (anything except 0-9, a-z, and A-Z).
-        // Far from perfect, but close enough for this simple program.
-        Pattern pattern = Pattern.compile("[\\s+]");
+    //read the input file, fill map
+    private static void readInput(String filename) throws IOException {
+    	//set up readers
+        FileReader file = new FileReader(filename);
+        BufferedReader reader = new BufferedReader(file);
 
-        // If you're wondering why we're not using Scanner instead, you're
-        // welcome to try out what happens... :-)
-        InputStream inputStream = new FileInputStream(filename);
-        InputStreamReader input = new InputStreamReader(inputStream);
-        BufferedReader reader = new BufferedReader(input);
-
-        int lineCount = 1;
         String line;
-        String url = "";
-        while ((line = reader.readLine()) != null) {
-        	if ((lineCount % 2) != 0) {
-				url = line;
-			} else {
-        		String[] words = pattern.split(line);
- 	        	for (String word : words) {
-    	    		if (map.has(word)) {
-    	    			ArrayList<String> temp = map.get(word);
-    	    			temp.add(url);
-    	    		} else {
-    	    			ArrayList<String> list = new ArrayList<>();
-    	    			list.add(url);
-    	    			map.insert(word, list);
-    	    		}
-        		}
-        	}
+        String url;
+        //keep track of urls and lines at the same time
+        while ((url = reader.readLine()) != null) {
+        	line = reader.readLine();
+
+    		String[] words = line.split("\\s+");
+        	for (String word : words) {
+        		//append or add key
+	    		if (map.has(word)) {
+	    			ArrayList<String> temp = map.get(word);
+	    			temp.add(url);
+	    		} else {
+	    			ArrayList<String> list = new ArrayList<>();
+	    			list.add(url);
+	    			map.insert(word, list);
+	    		}
+    		}
         }
     }
 }
