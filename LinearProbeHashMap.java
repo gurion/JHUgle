@@ -22,7 +22,7 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
 	private int curSizeIndex;
 	private double entries;
 
-	private int hash(K key) {
+	private int hash(Pair[] array, K key) {
 		return (key.hashCode() & 0x7FFFFFFF) % this.sizes[this.curSizeIndex];
 	}
 
@@ -34,12 +34,19 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
 		return this.entries/this.data.length;
 	}
 
-	private Pair find(K k) {
+	private int find(K k) {
 		if (k == null) {
 			throw new IllegalArgumentException("Can't handle null key");
 		}
 		int index = hash(k);
-		return this.data[index];
+		Pair p = this.data[index];
+		while (!p.key.equals(k)) {
+			index++
+			if (p.key.equals(k)) {
+				return index;
+			}
+		}
+		return -1;
 	}
 
 	private void rehash() {
@@ -111,7 +118,11 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public boolean has(K k) {
-    	return false;
+    	Pair p = find(k);
+    	if (p == null) {
+    		return false;
+    	}
+    	return true;
     }
 
     /**
@@ -128,6 +139,9 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
     	List<K> keys = new ArrayList<K>();
     	Pair<K, V> p;
     	for (int i = 0; i < this.data.length; i++) {
+    		if (this.data[i] != null) {
+    			keys.add(this.data[i]);
+    		}
     	}
     }
 
