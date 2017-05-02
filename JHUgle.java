@@ -4,10 +4,7 @@
 import java.util.Scanner;
 import java.io.FileReader;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.FileInputStream;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -31,6 +28,7 @@ public final class JHUgle {
 		System.out.println("Index Created");
 
 		Stack<ArrayList<String>> search = new Stack<>();
+		int size = 0;
 		boolean quit = false;
 		Scanner kb = new Scanner(System.in);
 
@@ -46,17 +44,19 @@ public final class JHUgle {
 		    switch(command) {
 		    	//Print top of stack
 		    	case "?":
-		    		//TO DO:
-		    		//HANDLE EMPTY STACK
+		    		if (size == 0) {
+		    			break;
+		    		}
 		    		urls = search.peek();
 		    		for (String s : urls) {
 		    			System.out.println(s);
-		    		}
+			    	}
 		    		break;
 		    	//intersect top two elements of stack and push result
 		    	case "&&":
-		    		//TO DO:
-		    		//HANDLE EMPTY STACK
+		    		if (size < 2) {
+		    			break;
+		    		}
         			one = search.pop();
         			two = search.pop();
         			for (String s : one) {
@@ -64,12 +64,14 @@ public final class JHUgle {
         					urls.add(s);
         				}
         			}
+        			size--;
         			search.push(urls);
 		    		break;
 		    	//union top two elements of stack and push result
 		    	case "||":
-		    		//TO DO:
-		    		//HANDLE EMPTY STACK		    	
+		    		if (size < 2) {
+		    			break;
+		    		}		    	
         			one = search.pop();
         			two = search.pop();
         			for (String s : one) {
@@ -80,6 +82,7 @@ public final class JHUgle {
         					urls.add(s);
         				}
         			}
+        			size--;
         			search.push(urls);
 		    		break;
 		    	//quit
@@ -90,8 +93,9 @@ public final class JHUgle {
 		    	default:
 		    		if (map.has(command)) {
 		    			urls = map.get(command); 
-		    			search.push(urls);
-		    		}
+		    			search.push(urls);	
+		    			size++;
+		    		} 
 		    		break;
 			}
 		}		
@@ -107,6 +111,7 @@ public final class JHUgle {
         String url;
         //keep track of urls and lines at the same time
         while ((url = reader.readLine()) != null) {
+        	
         	line = reader.readLine();
 
     		String[] words = line.split("\\s+");
