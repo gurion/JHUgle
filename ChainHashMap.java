@@ -7,75 +7,75 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
-* Hash Map implemented by chaining
-*
-* @param <K> Type for keys.
-* @param <V> Type for values.
-*/
+ * Hash Map implemented by chaining
+ *
+ * @param <K> Type for keys.
+ * @param <V> Type for values.
+ */
 public class ChainHashMap<K, V> implements Map<K, V> {
-	private class Pair {
-		K key;
-		V value;
-		Pair next;
+    private class Pair {
+	K key;
+	V value;
+	Pair next;
 
-		Pair(K k, V v, Pair n) {
-			this.key = k;
-			this.value = v;
-			this.next = n;
-		}
-
-		public String toString() {
-			return "Pair<key: " + this.key + "; value: " + this.value + ">";
-		}
+	Pair(K k, V v, Pair n) {
+	    this.key = k;
+	    this.value = v;
+	    this.next = n;
 	}
-
-	private Pair[] data;
+	
+	public String toString() {
+	    return "Pair<key: " + this.key + "; value: " + this.value + ">";
+	}
+    }
+    
+    private Pair[] data;
 	private double entries;
-
-	private int hash(K key) {
-		return key.hashCode();
+    
+    private int hash(K key) {
+	return key.hashCode();
+    }
+    
+    private int compress(int hashValue) {
+	return (hashValue & 0x7FFFFFFF) % this.data.length;
+    }
+    
+    private int rehashCompress(int hashValue) {
+	return (hashValue & 0x7FFFFFFF) % (this.data.length * 2);
+    }
+    
+    private double load() {
+	return this.entries/this.data.length;
+    }
+    
+    private Pair find(K k) {
+	if (k == null) {
+	    throw new IllegalArgumentException("Can't handle null key");
 	}
-
-	private int compress(int hashValue) {
-		return (hashValue & 0x7FFFFFFF) % this.data.length;
-	}
-
-	private int rehashCompress(int hashValue) {
-		return (hashValue & 0x7FFFFFFF) % (this.data.length * 2);
-	}
-
-	private double load() {
-		return this.entries/this.data.length;
-	}
-
-	private Pair find(K k) {
-		if (k == null) {
-			throw new IllegalArgumentException("Can't handle null key");
-		}
-		int index = compress(hash(k));
-		return data[index];
-	}
-
-	private void rehash() {
-		Pair[] bigger = (Pair[]) new Object[this.data.length * 2];
+	int index = compress(hash(k));
+	return data[index];
+    }
+    
+    private void rehash() {
+	Pair[] bigger = (Pair[]) new Object[this.data.length * 2];
         for (Pair p : data) {
-        	bigger[rehashCompress(hash(e.key))] = e;
+	    bigger[rehashCompress(hash(e.key))] = e;
         }
         this.data = bigger;
-	}
- 	
- 	/**
+    }
+    
+    /**
      * Insert a new key/value pair.
      *
      * @param k The key.
      * @param v The value to be associated with k.
      * @throws IllegalArgumentException If k is null or already mapped.
      */
- 	@Override
+    @Override
     public void insert(K k, V v) throws IllegalArgumentException {
-
+	
     }
-
+    
     /**
      * Remove an existing key/value pair.
      *
@@ -87,7 +87,7 @@ public class ChainHashMap<K, V> implements Map<K, V> {
     public V remove(K k) throws IllegalArgumentException {
     	return null;
     }
-
+    
     /**
      * Update the value associated with a key.
      *
@@ -122,7 +122,7 @@ public class ChainHashMap<K, V> implements Map<K, V> {
     public boolean has(K k) {
     	return false;
     }
-
+    
     /**
      * Number of mappings.
      *
@@ -132,27 +132,27 @@ public class ChainHashMap<K, V> implements Map<K, V> {
     public int size() {
     	return (int) this.entries;
     }
-
+    
     public Iterator<K> iterator() {
     	List<K> keys = new ArrayList<K>();
     	Pair<K, V> p;
     	for (int i = 0; i < this.data.length; i++) {
-    		p = this.data[i];
-    		if (p != null) {
-    			if (!keys.contains(p.key)) {
-    				keys.add(p.key);
-    			}
-    		}
-    		while (p.next != null) {
-    			p = p.next;
-    			if (!keys.contains(p.key)) {
-    				keys.add(p.key);
-    			}
-    		}
+	    p = this.data[i];
+	    if (p != null) {
+		if (!keys.contains(p.key)) {
+		    keys.add(p.key);
+		}
+	    }
+	    while (p.next != null) {
+		p = p.next;
+		if (!keys.contains(p.key)) {
+		    keys.add(p.key);
+		}
+	    }
     	}
     	return keys.iterator();
     }
-
+    
     private void setupStringBuilder() {
         if (this.stringBuilder == null) {
             this.stringBuilder = new StringBuilder();
@@ -160,14 +160,12 @@ public class ChainHashMap<K, V> implements Map<K, V> {
             this.stringBuilder.setLength(0);
         }
     }
-
+    
     @Override
     public String toString() {
     	this.setupStringBuilder();
-    	this.stringBuilder.append("{");
-    	
-    }
-
+    	this.stringBuilder.append("{");	
+    }   
 }
 
 
