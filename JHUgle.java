@@ -96,16 +96,6 @@ public final class JHUgle {
         }
     }
 
-    private static void printTop(int size, Stack<ArrayList<String>> stack, ArrayList<String> list) {
-       if (size == 0) {
-            return;
-        }
-        list = stack.peek();
-        for (String s : list) {
-            System.out.println(s);
-        }
-    }
-
     //read the input file, fill map
     private static void readInput(String filename) throws IOException {
         //set up readers
