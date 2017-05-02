@@ -4,66 +4,65 @@
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
- * Hash Map implemented by chaining
+ * Hash Map implemented by chaining.
  *
  * @param <K> Type for keys.
  * @param <V> Type for values.
  */
 public class ChainHashMap<K, V> implements Map<K, V> {
     private class Pair {
-	K key;
-	V value;
-	Pair next;
+        K key;
+        V value;
+        Pair next;
 
-	Pair(K k, V v, Pair n) {
-	    this.key = k;
-	    this.value = v;
-	    this.next = n;
-	}
-	
-	public String toString() {
-	    return "Pair<key: " + this.key + "; value: " + this.value + ">";
-	}
+        Pair(K k, V v, Pair n) {
+            this.key = k;
+            this.value = v;
+            this.next = n;
+        }
+
+        public String toString() {
+            return "Pair<key: " + this.key + "; value: " + this.value + ">";
+        }
     }
-    
+
     private Pair[] data;
-	private double entries;
-    
+    private double entries;
+
     private int hash(K key) {
-	return key.hashCode();
+        return key.hashCode();
     }
-    
+
     private int compress(int hashValue) {
-	return (hashValue & 0x7FFFFFFF) % this.data.length;
+        return (hashValue & 0x7FFFFFFF) % this.data.length;
     }
-    
+
     private int rehashCompress(int hashValue) {
-	return (hashValue & 0x7FFFFFFF) % (this.data.length * 2);
+        return (hashValue & 0x7FFFFFFF) % (this.data.length * 2);
     }
-    
+
     private double load() {
-	return this.entries/this.data.length;
+        return (this.entries / this.data.length);
     }
-    
+
     private Pair find(K k) {
-	if (k == null) {
-	    throw new IllegalArgumentException("Can't handle null key");
-	}
-	int index = compress(hash(k));
-	return data[index];
+        if (k == null) {
+            throw new IllegalArgumentException("Can't handle null key");
+        }
+        int index = this.compress(this.hash(k));
+        return this.data[index];
     }
-    
+
     private void rehash() {
-	Pair[] bigger = (Pair[]) new Object[this.data.length * 2];
-        for (Pair p : data) {
-	    bigger[rehashCompress(hash(e.key))] = e;
+        Pair[] bigger = (Pair[]) new Object[this.data.length * 2];
+        for (Pair p : this.data) {
+            bigger[this.rehashCompress(this.hash(e.key))] = e;
         }
         this.data = bigger;
     }
-    
+
     /**
      * Insert a new key/value pair.
      *
@@ -73,9 +72,9 @@ public class ChainHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public void insert(K k, V v) throws IllegalArgumentException {
-	
+        return;
     }
-    
+
     /**
      * Remove an existing key/value pair.
      *
@@ -85,9 +84,9 @@ public class ChainHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public V remove(K k) throws IllegalArgumentException {
-    	return null;
+        return null;
     }
-    
+
     /**
      * Update the value associated with a key.
      *
@@ -109,7 +108,7 @@ public class ChainHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public V get(K k) throws IllegalArgumentException {
-    	return null;
+        return null;
     }
 
     /**
@@ -120,9 +119,9 @@ public class ChainHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public boolean has(K k) {
-    	return false;
+        return false;
     }
-    
+
     /**
      * Number of mappings.
      *
@@ -130,29 +129,34 @@ public class ChainHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public int size() {
-    	return (int) this.entries;
+        return (int) this.entries;
     }
-    
+
+    /**
+     * HashMap iterator.
+     *
+     * @return an iterator.
+     */
     public Iterator<K> iterator() {
-    	List<K> keys = new ArrayList<K>();
-    	Pair<K, V> p;
-    	for (int i = 0; i < this.data.length; i++) {
-	    p = this.data[i];
-	    if (p != null) {
-		if (!keys.contains(p.key)) {
-		    keys.add(p.key);
-		}
-	    }
-	    while (p.next != null) {
-		p = p.next;
-		if (!keys.contains(p.key)) {
-		    keys.add(p.key);
-		}
-	    }
-    	}
-    	return keys.iterator();
+        List<K> keys = new ArrayList<K>();
+        Pair<K, V> p;
+        for (int i = 0; i < this.data.length; i++) {
+            p = this.data[i];
+            if (p != null) {
+                if (!keys.contains(p.key)) {
+                    keys.add(p.key);
+                }
+            }
+            while (p.next != null) {
+                p = p.next;
+                if (!keys.contains(p.key)) {
+                    keys.add(p.key);
+                }
+            }
+        }
+        return keys.iterator();
     }
-    
+
     private void setupStringBuilder() {
         if (this.stringBuilder == null) {
             this.stringBuilder = new StringBuilder();
@@ -160,12 +164,12 @@ public class ChainHashMap<K, V> implements Map<K, V> {
             this.stringBuilder.setLength(0);
         }
     }
-    
+
     @Override
     public String toString() {
-    	this.setupStringBuilder();
-    	this.stringBuilder.append("{");	
-    }   
+        this.setupStringBuilder();
+        this.stringBuilder.append("{");
+    }
 }
 
 

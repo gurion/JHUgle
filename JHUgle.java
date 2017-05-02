@@ -11,11 +11,11 @@ import java.util.Stack;
 /** My search engine. */
 public final class JHUgle {
 
-    /** Make checkstyle happy. */
-    private JHUgle() {}
-
     private static AvlTreeMap<String, ArrayList<String>> map
         = new AvlTreeMap<>();
+
+    /** Shut it checkstyle. */
+    private JHUgle() {}
 
     /**
      * Main method.
@@ -42,7 +42,6 @@ public final class JHUgle {
             ArrayList<String> two = new ArrayList<>();
 
             switch (command) {
-                //Print top of stack
                 case "?":
                     if (size == 0) {
                         break;
@@ -52,7 +51,6 @@ public final class JHUgle {
                         System.out.println(s);
                     }
                     break;
-                    //intersect top two elements of stack and push result
                 case "&&":
                     if (size < 2) {
                         break;
@@ -67,7 +65,6 @@ public final class JHUgle {
                     size--;
                     search.push(urls);
                     break;
-                    //union top two elements of stack and push result
                 case "||":
                     if (size < 2) {
                         break;
@@ -85,11 +82,9 @@ public final class JHUgle {
                     size--;
                     search.push(urls);
                     break;
-                    //quit
                 case "!":
                     quit = true;
                     break;
-                    //push a new keyword's url list
                 default:
                     if (map.has(command)) {
                         urls = map.get(command);
