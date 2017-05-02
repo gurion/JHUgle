@@ -14,12 +14,6 @@ public final class JHUgle {
     private static AvlTreeMap<String, ArrayList<String>> map
         = new AvlTreeMap<>();
 
-    private static Stack<ArrayList<String>> search = new Stack<>();
-    private static int size;
-    private static ArrayList<String> urls = new ArrayList<>();
-    private static ArrayList<String> one = new ArrayList<>();
-    private static ArrayList<String> two = new ArrayList<>();
-
     /** Shut it checkstyle. */
     private JHUgle() {}
 
@@ -33,6 +27,8 @@ public final class JHUgle {
         readInput(args[0]);
         System.out.println("Index Created");
 
+        Stack<ArrayList<String>> search = new Stack<>();
+        int size = 0;
         boolean quit = false;
         Scanner kb = new Scanner(System.in);
 
@@ -41,74 +37,72 @@ public final class JHUgle {
 
             //Instantiate Lists
             String command = kb.next();
+            ArrayList<String> urls = new ArrayList<>();
+            ArrayList<String> one = new ArrayList<>();
+            ArrayList<String> two = new ArrayList<>();
+
             switch (command) {
                 case "?":
-                    this.printTop();
+                    if (size == 0) {
+                        break;
+                    }
+                    urls = search.peek();
+                    for (String s : urls) {
+                        System.out.println(s);
+                    }
                     break;
                 case "&&":
-                    this.intersect();
+                    if (size < 2) {
+                        break;
+                    }
+                    one = search.pop();
+                    two = search.pop();
+                    for (String s : one) {
+                        if (two.contains(s)) {
+                            urls.add(s);
+                        }
+                    }
+                    size--;
+                    search.push(urls);
                     break;
                 case "||":
-                    this.union();
+                    if (size < 2) {
+                        break;
+                    }
+                    one = search.pop();
+                    two = search.pop();
+                    for (String s : one) {
+                        urls.add(s);
+                    }
+                    for (String s : two) {
+                        if (!urls.contains(s)) {
+                            urls.add(s);
+                        }
+                    }
+                    size--;
+                    search.push(urls);
                     break;
                 case "!":
                     quit = true;
                     break;
                 default:
-                    this.addToMap(command);
+                    if (map.has(command)) {
+                        urls = map.get(command);
+                        search.push(urls);
+                        size++;
+                    }
                     break;
             }
         }
     }
 
-    private static void printTop() {
-        if (this.size == 0) {
+    private static void printTop(int size, Stack<ArrayList<String>> stack, ArrayList<String> list) {
+       if (size == 0) {
             return;
         }
-        this.urls = this.search.peek();
-        for (String s : this.urls) {
+        list = stack.peek();
+        for (String s : list) {
             System.out.println(s);
-        }
-    }
-
-    private static void intersect() {
-        if (this.size < 2) {
-            return;
-        }
-        this.one = this.search.pop();
-        this.two = this.search.pop();
-        for (String s : this.one) {
-            if (this.two.contains(s)) {
-                this.urls.add(s);
-            }
-        }
-        this.size--;
-        this.search.push(this.urls);
-    }
-
-    private static void union() {
-        if (this.size < 2) {
-            return;
-        }
-        this.one = this.search.pop();
-        this.two = this.search.pop();
-        for (String s : this.one) {
-            this.urls.add(s);
-        }
-        for (String s : this.two) {
-            if (!this.urls.contains(s)) {
-                this.urls.add(s);
-            }
-        }
-        this.size--;
-        this.search.push(this.urls);
-    }
-
-    private static void addToMap(String command) {
-        if (this.map.has(command)) {
-            this.urls = map.get(command);
-            this.search.push(this.urls);
-            this.size++;
         }
     }
 
