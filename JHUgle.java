@@ -15,7 +15,7 @@ public final class JHUgle {
         = new AvlTreeMap<>();
 
     private static Stack<ArrayList<String>> search = new Stack<>();
-    private static int size = 0;
+    private static int size;
     private static ArrayList<String> urls = new ArrayList<>();
     private static ArrayList<String> one = new ArrayList<>();
     private static ArrayList<String> two = new ArrayList<>();
@@ -33,7 +33,6 @@ public final class JHUgle {
         readInput(args[0]);
         System.out.println("Index Created");
 
-        Stack<ArrayList<String>> search = new Stack<>();
         boolean quit = false;
         Scanner kb = new Scanner(System.in);
 
@@ -46,11 +45,11 @@ public final class JHUgle {
                 case "?":
                     this.printTop();
                     break;
-                case "&&"
+                case "&&":
                     this.intersect();
                     break;
                 case "||":
-
+                    this.union();
                     break;
                 case "!":
                     quit = true;
@@ -63,7 +62,7 @@ public final class JHUgle {
     }
 
     private static void printTop() {
-       if (this.size == 0) {
+        if (this.size == 0) {
             return;
         }
         this.urls = this.search.peek();
