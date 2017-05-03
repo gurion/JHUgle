@@ -1,13 +1,13 @@
-/**
-    Gurion Marks
-    gmarks2
-    gurion@jhu.edu
-    Angelica Walker
-    awalke57
-    awalke57@jhu.edu
-    600.226.02
-    05/03/17
-    Assignment 9
+/*
+Gurion Marks
+gmarks2
+gurion@jhu.edu
+Angelica Walker
+awalke57
+awalke57@jhu.edu
+600.226.02
+05/03/17
+Assignment 9
 */
 
 import com.github.phf.jb.Bench;
@@ -22,12 +22,12 @@ import java.util.Random;
  * instantiate and initialize a number of different set implementations.
  * Your benchmarking code for two classes will also be a bit messy. :-/
 */
-public final class LinearProbeBench {
+public final class LPBench {
     private static final int SIZE = 200; // you may need to tweak this...
     private static final Random RAND = new Random();
 
     /** Make checkstyle happy. */
-    private LinearProbeBench() {}
+    private LPBench() {}
 
     // First some basic "compound operations" to benchmark. Note that each
     // of these is carefully dimensioned (regarding the range of elements)
@@ -109,7 +109,7 @@ public final class LinearProbeBench {
 
     private static void putRandom(Map<Integer, Integer> m, int[] rand) {
         for (int i = 0; i < SIZE; i++) {
-            m.put(rand[i], SIZE * i);
+            m.put(rand[i], i);
         }
     }
 
@@ -120,7 +120,7 @@ public final class LinearProbeBench {
      * @param b bee.
      */
     @Bench
-    public static void insertLinearProbe(Bee b) {
+    public static void insertLinearLP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, Integer> m = new LinearProbeHashMap<>();
@@ -134,7 +134,7 @@ public final class LinearProbeBench {
      * @param b bee.
      */
     @Bench
-    public static void insertRandomProbe(Bee b) {
+    public static void insertRandomLP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, Integer> m = new LinearProbeHashMap<>();
@@ -151,7 +151,7 @@ public final class LinearProbeBench {
      * @param b bee.
      */
     @Bench
-    public static void removeLinearProbe(Bee b) {
+    public static void removeLinearLP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, Integer> m = new LinearProbeHashMap<>();
@@ -170,7 +170,7 @@ public final class LinearProbeBench {
      * @param b bee.
      */
     @Bench
-    public static void removeRandomProbe(Bee b) {
+    public static void removeRandomLP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, Integer> m = new LinearProbeHashMap<>();
@@ -189,7 +189,7 @@ public final class LinearProbeBench {
      * @param b bee.
      */
     @Bench
-    public static void lookupLinearProbe(Bee b) {
+    public static void lookupLinearLP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, Integer> m = new LinearProbeHashMap<>();
@@ -208,7 +208,7 @@ public final class LinearProbeBench {
      * @param b bee.
      */
     @Bench
-    public static void lookupRandomProbe(Bee b) {
+    public static void lookupRandomLP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, Integer> m = new LinearProbeHashMap<>();
@@ -227,7 +227,7 @@ public final class LinearProbeBench {
      * @param b bee.
      */
     @Bench
-    public static void getLinearProbe(Bee b) {
+    public static void getLinearLP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, Integer> m = new LinearProbeHashMap<>();
@@ -246,7 +246,7 @@ public final class LinearProbeBench {
      * @param b bee.
      */
     @Bench
-    public static void getRandomProbe(Bee b) {
+    public static void getRandomLP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, Integer> m = new LinearProbeHashMap<>();
@@ -265,7 +265,7 @@ public final class LinearProbeBench {
      * @param b bee.
      */
     @Bench
-    public static void putLinearProbe(Bee b) {
+    public static void putLinearLP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, Integer> m = new LinearProbeHashMap<>();
@@ -281,12 +281,14 @@ public final class LinearProbeBench {
      * @param b bee.
      */
     @Bench
-    public static void putRandomProbe(Bee b) {
+    public static void putRandomLP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, Integer> m = new LinearProbeHashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
+            makeRandomArray(random);
+            insertRandom(m, random);
             makeRandomArray(random);
             b.start();
             putRandom(m, random);
