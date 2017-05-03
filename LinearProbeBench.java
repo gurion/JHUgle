@@ -21,7 +21,7 @@ import java.util.Random;
  * Sadly the code here is a tad bit messy since there's no elegant way to
  * instantiate and initialize a number of different set implementations.
  * Your benchmarking code for two classes will also be a bit messy. :-/
- */
+*/
 public final class LinearProbeBench {
     private static final int SIZE = 200; // you may need to tweak this...
     private static final Random RAND = new Random();
@@ -107,12 +107,9 @@ public final class LinearProbeBench {
         }
     }
 
-    private static void putRandom(Map<Integer, Integer> m) {
+    private static void putRandom(Map<Integer, Integer> m, int[] rand) {
         for (int i = 0; i < SIZE; i++) {
-            int temp = RAND.nextInt(SIZE * 2);
-            if (m.has(temp)) {
-                m.put(temp, i);
-            }
+            m.put(rand[i], SIZE * i);
         }
     }
 
@@ -263,22 +260,6 @@ public final class LinearProbeBench {
         }
     }
 
-    /** put random probe.
-     *
-     * @param b bee.
-     */
-    @Bench
-    public static void putRandomProbe(Bee b) {
-        for (int n = 0; n < b.reps(); n++) {
-            b.stop();
-            Map<Integer, String> m = new LinearProbeHashMap<>();
-            insertRandom(m);
-            b.start();
-            putRandom(m);
-
-        }
-    }
-
     /** put linear probe.
      *
      * @param b bee.
@@ -287,7 +268,7 @@ public final class LinearProbeBench {
     public static void putLinearProbe(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, String> m = new LinearProbeHashMap<>();
+            Map<Integer, Integer> m = new LinearProbeHashMap<>();
             insertLinear(m);
             b.start();
             putLinear(m);
@@ -295,4 +276,29 @@ public final class LinearProbeBench {
         }
     }
 
+    /** put random probe.
+     *
+     * @param b bee.
+     */
+    @Bench
+    public static void putRandomProbe(Bee b) {
+        for (int n = 0; n < b.reps(); n++) {
+            b.stop();
+            Map<Integer, Integer> m = new LinearProbeHashMap<>();
+            int[] random = new int[SIZE];
+            fillArray(random);
+            makeRandomArray(random);
+            b.start();
+            putRandom(m, random);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+

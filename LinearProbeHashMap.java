@@ -259,15 +259,6 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
      * @return Iterator.
      */
     public Iterator<K> iterator() {
-        /*
-        List<K> keys = new ArrayList<K>();
-        Pair<K, V> p;
-        for (int i = 0; i < this.data.length; i++) {
-            if (this.data[i] != null) {
-                keys.add(this.data[i]);
-            }
-        }
-        */
         return new HashMapIterator();
     }
 
