@@ -53,6 +53,7 @@ public final class JHUgle {
             switch (command) {
                 case "?":
                     if (size == 0) {
+                        System.err.println("Empty query.");
                         break;
                     }
                     urls = search.peek();
@@ -62,6 +63,7 @@ public final class JHUgle {
                     break;
                 case "&&":
                     if (size < 2) {
+                        System.err.println("Not enough entries to AND.");
                         break;
                     }
                     one = search.pop();
@@ -76,6 +78,7 @@ public final class JHUgle {
                     break;
                 case "||":
                     if (size < 2) {
+                        System.err.println("Not enough entries to OR.");
                         break;
                     }
                     one = search.pop();
@@ -99,6 +102,9 @@ public final class JHUgle {
                         urls = map.get(command);
                         search.push(urls);
                         size++;
+                    }
+                    else {
+                        System.err.printf("Your keyword, \"%s\", was not found in our database.\n", command);
                     }
                     break;
             }
