@@ -79,8 +79,10 @@ public class ChainHashMap<K, V> implements Map<K, V> {
     private double entries;
     private StringBuilder stringBuilder;
 
+    /** make checkstyle happy. */
     public ChainHashMap() {
-        this.data = (LinkedList<Pair<K, V>>[]) Array.newInstance(LinkedList.class, this.sizes[this.curSizeIndex]);
+        this.data = (LinkedList<Pair<K, V>>[])
+            Array.newInstance(LinkedList.class, this.sizes[this.curSizeIndex]);
     }
 
     private int hash(K key) {
@@ -88,7 +90,8 @@ public class ChainHashMap<K, V> implements Map<K, V> {
     }
 
     private int rehashValue(K key) {
-        return ((key.hashCode() & 0x7FFFFFFF) % this.sizes[this.curSizeIndex + 1]);
+        return ((key.hashCode() & 0x7FFFFFFF)
+                % this.sizes[this.curSizeIndex + 1]);
     }
 
     private double load() {
@@ -121,7 +124,9 @@ public class ChainHashMap<K, V> implements Map<K, V> {
     }
 
     private void rehash() {
-        LinkedList<Pair<K, V>>[] bigger = (LinkedList<Pair<K, V>>[]) Array.newInstance(LinkedList.class, this.sizes[this.curSizeIndex + 1]);
+        LinkedList<Pair<K, V>>[] bigger = (LinkedList<Pair<K, V>>[])
+            Array.newInstance(LinkedList.class,
+                                 this.sizes[this.curSizeIndex + 1]);
         //      for (int i = 0; i < sizes[curSizeIndex + 1]; i++) {
         //    bigger[i] = new LinkedList<Pair<K, V>>();
         //      }
