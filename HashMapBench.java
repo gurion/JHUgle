@@ -21,12 +21,13 @@ import java.util.Random;
  * Sadly the code here is a tad bit messy since there's no elegant way to
  * instantiate and initialize a number of different set implementations.
  * Your benchmarking code for two classes will also be a bit messy. :-/
- */
-public final class ChainBench {
+*/
+public final class HashMapBench {
     private static final int SIZE = 300; // you may need to tweak this...
     private static final Random RAND = new Random();
 
-    private ChainBench() {}
+    /** Make checkstyle happy. */
+    private HashMapBench() {}
 
     // First some basic "compound operations" to benchmark. Note that each
     // of these is carefully dimensioned (regarding the range of elements)
@@ -112,32 +113,31 @@ public final class ChainBench {
         }
     }
 
-
     // Now the benchmarks we actually want to run.
 
-    /** insert linear chain.
+    /** insert linear probe.
      *
      * @param b bee.
      */
     @Bench
-    public static void insertLinearCH(Bee b) {
+    public static void insertLinearQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new ChainHashMap<>();
+            Map<Integer, Integer> m = new HashMap<>();
             b.start();
             insertLinear(m);
         }
     }
 
-    /** insert linear chain.
+    /** insert random probe.
      *
      * @param b bee.
      */
     @Bench
-    public static void insertRandomCH(Bee b) {
+    public static void insertRandomQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new ChainHashMap<>();
+            Map<Integer, Integer> m = new HashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -146,15 +146,15 @@ public final class ChainBench {
         }
     }
 
-    /** remove linear chain.
+    /** remove linear probe.
      *
      * @param b bee.
      */
     @Bench
-    public static void removeLinearCH(Bee b) {
+    public static void removeLinearQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new ChainHashMap<>();
+            Map<Integer, Integer> m = new HashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -165,15 +165,15 @@ public final class ChainBench {
         }
     }
 
-    /** remove random chain.
+    /** remove random probe.
      *
      * @param b bee.
      */
     @Bench
-    public static void removeRandomCH(Bee b) {
+    public static void removeRandomQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new ChainHashMap<>();
+            Map<Integer, Integer> m = new HashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -184,15 +184,15 @@ public final class ChainBench {
         }
     }
 
-    /** lookup linear chain.
+    /** lookup linear probe.
      *
      * @param b bee.
      */
     @Bench
-    public static void lookupLinearCH(Bee b) {
+    public static void lookupLinearQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new ChainHashMap<>();
+            Map<Integer, Integer> m = new HashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -203,15 +203,15 @@ public final class ChainBench {
         }
     }
 
-    /** lookup random chain.
+    /** lookup random probe.
      *
      * @param b bee.
      */
     @Bench
-    public static void lookupRandomCH(Bee b) {
+    public static void lookupRandomQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new ChainHashMap<>();
+            Map<Integer, Integer> m = new HashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -222,15 +222,15 @@ public final class ChainBench {
         }
     }
 
-    /** get linear chain.
+    /** get linear probe.
      *
      * @param b bee.
      */
     @Bench
-    public static void getLinearCH(Bee b) {
+    public static void getLinearQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new ChainHashMap<>();
+            Map<Integer, Integer> m = new HashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -241,15 +241,15 @@ public final class ChainBench {
         }
     }
 
-    /** get random chain.
+    /** get random probe.
      *
      * @param b bee.
      */
     @Bench
-    public static void getRandomCH(Bee b) {
+    public static void getRandomQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new ChainHashMap<>();
+            Map<Integer, Integer> m = new HashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -260,30 +260,31 @@ public final class ChainBench {
         }
     }
 
-    /** put linear chain.
+    /** put linear probe.
      *
      * @param b bee.
      */
     @Bench
-    public static void putLinearCH(Bee b) {
+    public static void putLinearQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new ChainHashMap<>();
+            Map<Integer, Integer> m = new HashMap<>();
             insertLinear(m);
             b.start();
             putLinear(m);
+
         }
     }
 
-    /** put random chain.
+    /** put random probe.
      *
      * @param b bee.
      */
     @Bench
-    public static void putRandomCH(Bee b) {
+    public static void putRandomQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new LPHashMap<>();
+            Map<Integer, Integer> m = new HashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -294,3 +295,12 @@ public final class ChainBench {
         }
     }
 }
+
+
+
+
+
+
+
+
+
