@@ -102,8 +102,7 @@ public final class JHUgle {
                         urls = map.get(command);
                         search.push(urls);
                         size++;
-                    }
-                    else {
+                    } else {
                         System.err.printf("Your keyword, \"%s\", was not found in our database.\n", command);
                     }
                     break;
