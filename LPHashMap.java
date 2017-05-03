@@ -54,10 +54,10 @@ public class LPHashMap<K, V> implements Map<K, V> {
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
             }
-        if (LPHashMap.this.data[this.returned] == null) {
-            this.returned++;
-            return null;
-        }
+            if (LPHashMap.this.data[this.returned] == null) {
+                this.returned++;
+                return null;
+            }
             K k = LPHashMap.this.data[this.returned].key;
             this.returned++;
             return k;
