@@ -23,8 +23,83 @@ public final class JHUgle {
     private static QPHashMap<String, ArrayList<String>> map
         = new QPHashMap<>();
 
+    private static Stack<ArrayList<String>> search = new Stack<>();
+    private static ArrayList<String> urls = new ArrayList<>();
+    private static ArrayList<String> one = new ArrayList<>();
+    private static ArrayList<String> two = new ArrayList<>();
+    private static int size;
+
     /** Shut it checkstyle. */
     private JHUgle() {}
+
+    private static void printTop() {
+        if (size == 0) {
+            System.err.println("Empty query.");
+            return;
+        }
+        urls = search.peek();
+        for (String s : urls) {
+            System.out.println(s);
+        }
+    }
+
+    private static void intersect() {
+        if (size < 2) {
+            System.err.println("Not enough entries to AND.");
+            return;
+        }
+        one = search.pop();
+        two = search.pop();
+        ArrayList<String> temp = new ArrayList<>();
+        for (String s : one) {
+            if (two.contains(s)) {
+                temp.add(s);
+            }
+        }
+        urls = temp;
+        search.push(urls);
+        size--;
+    }
+
+    private static void union() {
+        if (size < 2) {
+            System.err.println("Not enough entries to OR.");
+            return;
+        }
+        one = search.pop();
+        two = search.pop();
+        ArrayList<String> temp = new ArrayList<>();
+
+        for (String s : one) {
+            temp.add(s);
+        }
+
+        for (String s : two) {
+            if (!temp.contains(s)) {
+                temp.add(s);
+            }
+        }
+
+        for (String s : temp) {
+            if (!urls.contains(s)) {
+                urls.add(s);
+            }
+        }
+        size--;
+        urls = temp;
+        search.push(urls);
+    }
+
+    private static void addToMap(String command) {
+        if (map.has(command)) {
+            urls = map.get(command);
+            search.push(urls);
+            size++;
+        } else {
+            System.err.printf("Your keyword, \"%s\", was not", command);
+            System.err.print(" found in our database.\n");
+        }
+    }
 
     /**
      * Main method.
@@ -36,76 +111,28 @@ public final class JHUgle {
         readInput(args[0]);
         System.out.println("Index Created");
 
-        Stack<ArrayList<String>> search = new Stack<>();
-        int size = 0;
         boolean quit = false;
         Scanner kb = new Scanner(System.in);
 
         while (!quit) {
             System.out.print(">");
 
-            //Instantiate Lists
             String command = kb.next();
-            ArrayList<String> urls = new ArrayList<>();
-            ArrayList<String> one = new ArrayList<>();
-            ArrayList<String> two = new ArrayList<>();
-
             switch (command) {
                 case "?":
-                    if (size == 0) {
-                        System.err.println("Empty query.");
-                        break;
-                    }
-                    urls = search.peek();
-                    for (String s : urls) {
-                        System.out.println(s);
-                    }
+                    printTop();
                     break;
                 case "&&":
-                    if (size < 2) {
-                        System.err.println("Not enough entries to AND.");
-                        break;
-                    }
-                    one = search.pop();
-                    two = search.pop();
-                    for (String s : one) {
-                        if (two.contains(s)) {
-                            urls.add(s);
-                        }
-                    }
-                    size--;
-                    search.push(urls);
+                    intersect();
                     break;
                 case "||":
-                    if (size < 2) {
-                        System.err.println("Not enough entries to OR.");
-                        break;
-                    }
-                    one = search.pop();
-                    two = search.pop();
-                    for (String s : one) {
-                        urls.add(s);
-                    }
-                    for (String s : two) {
-                        if (!urls.contains(s)) {
-                            urls.add(s);
-                        }
-                    }
-                    size--;
-                    search.push(urls);
+                    union();
                     break;
                 case "!":
                     quit = true;
                     break;
                 default:
-                    if (map.has(command)) {
-                        urls = map.get(command);
-                        search.push(urls);
-                        size++;
-                    } else {
-                        System.err.printf("Your keyword, \"%s\",", command);
-                        System.err.print(" was not found in our database.\n");
-                    }
+                    addToMap(command);
                     break;
             }
         }
