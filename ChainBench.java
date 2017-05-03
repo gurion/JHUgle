@@ -259,7 +259,7 @@ public final class ChainBench {
             getRandom(m, random);
         }
     }
-    
+
     /** put linear chain.
      *
      * @param b bee.
@@ -272,7 +272,6 @@ public final class ChainBench {
             insertLinear(m);
             b.start();
             putLinear(m);
-
         }
     }
 
