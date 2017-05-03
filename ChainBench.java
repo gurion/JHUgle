@@ -1,5 +1,14 @@
-//Gurion Marks
-//gmarks2
+/** 
+    Gurion Marks
+    gmarks2
+    gurion@jhu.edu
+    Angelica Walker
+    awalke57
+    awalke57@jhu.edu
+    600.226.02
+    05/03/17
+    Assignment 9
+*/
 
 import com.github.phf.jb.Bench;
 import com.github.phf.jb.Bee;
@@ -7,7 +16,7 @@ import com.github.phf.jb.Bee;
 import java.util.Random;
 
 /**
- * Compare performance of ArrayMap String, and ListMap.String, 
+ * Compare performance of ArrayMap String, and ListMap.String,
  *
  * Sadly the code here is a tad bit messy since there's no elegant way to
  * instantiate and initialize a number of different set implementations.
@@ -93,7 +102,7 @@ public final class ChainBench {
 
     private static void putLinear(Map<Integer, Integer> m) {
         for (int i = 0; i < SIZE; i++) {
-	    m.put(i, i);
+            m.put(i, i);
         }
     }
 
@@ -109,6 +118,10 @@ public final class ChainBench {
 
     // Now the benchmarks we actually want to run.
 
+    /** insert linear chain.
+     *
+     * @param b bee.
+     */
     @Bench
     public static void insertLinearChain(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
@@ -119,6 +132,10 @@ public final class ChainBench {
         }
     }
 
+    /** insert linear chain.
+     *
+     * @param b bee.
+     */
     @Bench
     public static void insertRandomChain(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
@@ -132,6 +149,10 @@ public final class ChainBench {
         }
     }
 
+    /** remove linear chain.
+     *
+     * @param b bee.
+     */
     @Bench
     public static void removeLinearChain(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
@@ -147,6 +168,10 @@ public final class ChainBench {
         }
     }
 
+    /** remove random chain.
+     *
+     * @param b bee.
+     */
     @Bench
     public static void removeRandomChain(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
@@ -162,6 +187,10 @@ public final class ChainBench {
         }
     }
 
+    /** lookup linear chain.
+     *
+     * @param b bee.
+     */
     @Bench
     public static void lookupLinearChain(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
@@ -177,6 +206,10 @@ public final class ChainBench {
         }
     }
 
+    /** lookup random chain.
+     *
+     * @param b bee.
+     */
     @Bench
     public static void lookupRandomChain(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
@@ -192,6 +225,10 @@ public final class ChainBench {
         }
     }
 
+    /** get linear chain.
+     *
+     * @param b bee.
+     */
     @Bench
     public static void getLinearChain(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
@@ -207,7 +244,10 @@ public final class ChainBench {
         }
     }
 
-
+    /** get random chain.
+     *
+     * @param b bee.
+     */
     @Bench
     public static void getRandomChain(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
@@ -223,27 +263,35 @@ public final class ChainBench {
         }
     }
 
+    /** put random chain.
+     *
+     * @param b bee.
+     */
     @Bench
     public static void putRandomChain(Bee b) {
-	for (int n = 0; n < b.reps(); n++) {
+        for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, String> m = new ChainHashMap<>();
             insertRandom(m);
             b.start();
             putRandom(m);
 
-	}
+        }
     }
 
+    /** put linear chain.
+     *
+     * @param b bee.
+     */
     @Bench
     public static void putLinearChain(Bee b) {
-	for (int n = 0; n < b.reps(); n++) {
+        for (int n = 0; n < b.reps(); n++) {
             b.stop();
             Map<Integer, String> m = new ChainHashMap<>();
             insertLinear(m);
             b.start();
             putLinear(m);
 
-	}
+        }
     }
 }

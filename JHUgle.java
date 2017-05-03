@@ -1,5 +1,14 @@
-//Gurion Marks
-//Angelica Walker
+/** 
+    Gurion Marks
+    gmarks2
+    gurion@jhu.edu
+    Angelica Walker
+    awalke57
+    awalke57@jhu.edu
+    600.226.02
+    05/03/17
+    Assignment 9
+*/
 
 import java.util.Scanner;
 import java.io.FileReader;
@@ -46,53 +55,70 @@ public final class JHUgle {
                     if (size == 0) {
                         break;
                     }
-                    urls = search.peek();
-                    for (String s : urls) {
-                        System.out.println(s);
-                    }
+                    this.print();
                     break;
                 case "&&":
                     if (size < 2) {
                         break;
                     }
-                    one = search.pop();
-                    two = search.pop();
-                    for (String s : one) {
-                        if (two.contains(s)) {
-                            urls.add(s);
-                        }
-                    }
-                    size--;
-                    search.push(urls);
+                    this.intersection();
                     break;
                 case "||":
                     if (size < 2) {
                         break;
                     }
-                    one = search.pop();
-                    two = search.pop();
-                    for (String s : one) {
-                        urls.add(s);
-                    }
-                    for (String s : two) {
-                        if (!urls.contains(s)) {
-                            urls.add(s);
-                        }
-                    }
-                    size--;
-                    search.push(urls);
+                    this.union();
                     break;
                 case "!":
                     quit = true;
                     break;
                 default:
-                    if (map.has(command)) {
-                        urls = map.get(command);
-                        search.push(urls);
-                        size++;
-                    }
+                    this.addToMap();
                     break;
             }
+        }
+    }
+
+
+    private static void union() {
+        this.one = this.search.pop();
+        this.two = this.search.pop();
+        for (String s : this.one) {
+            this.urls.add(s);
+        }
+        for (String s : this.two) {
+            if (!this.urls.contains(s)) {
+                this.urls.add(s);
+            }
+        }
+        this.size--;
+        this.search.push(this.urls);
+    }
+
+    private static void intersection() {
+        this.one = this.search.pop();
+        this.two = this.search.pop();
+        for (String s : this.one) {
+            if (this.two.contains(s)) {
+                this.urls.add(s);
+            }
+        }
+        this.size--;
+        this.search.push(this.urls);
+    }
+
+    private static void print() {
+        this.urls = this.search.peek();
+        for (String s : this.urls) {
+            System.out.println(s);
+        }
+    }
+
+    private static void addToMap() {
+        if (map.has(command)) {
+            urls = map.get(command);
+            search.push(urls);
+            size++;
         }
     }
 
@@ -124,10 +150,6 @@ public final class JHUgle {
         }
     }
 }
-
-
-
-
 
 
 
