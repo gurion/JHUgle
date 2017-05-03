@@ -10,6 +10,9 @@ awalke57@jhu.edu
 Assignment 9
 */
 
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
 /** Instantiate SparseGraph to test. */
 public class ChainHashMapTest extends MapTestBase {
 	@Override

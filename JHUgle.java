@@ -20,8 +20,8 @@ import java.util.Stack;
 /** My search engine. */
 public final class JHUgle {
 
-    private static ChainHashMap<String, ArrayList<String>> map
-        = new ChainHashMap<>();
+    private static LPHashMap<String, ArrayList<String>> map
+        = new LPHashMap<>();
 
     /** Shut it checkstyle. */
     private JHUgle() {}
