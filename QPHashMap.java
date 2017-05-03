@@ -22,6 +22,7 @@ public class QPHashMap<K, V> implements Map<K, V> {
             this.value = v;
             this.tombstone = false;
         }
+
         public boolean equals(Object that) {
             return (that instanceof Pair)
                 && (this.key.equals(((Pair) that).key));
@@ -69,21 +70,24 @@ public class QPHashMap<K, V> implements Map<K, V> {
     private double entries;
     private StringBuilder stringBuilder;
 
+    /** Constructor. */
     public QPHashMap() {
         this.data = (Pair<K, V>[])
             Array.newInstance(Pair.class, this.sizes[this.curSizeIndex]);
     }
-    
+
     private int hash(K key) {
-        return (key.hashCode() & 0x7FFFFFFF) % this.sizes[this.curSizeIndex];
+        return (key.hashCode() & 0x7FFFFFFF)
+            % this.sizes[this.curSizeIndex];
     }
 
     private int rehashValue(K key) {
-        return (key.hashCode() & 0x7FFFFFFF) % this.sizes[this.curSizeIndex + 1];
+        return (key.hashCode() & 0x7FFFFFFF)
+            % this.sizes[this.curSizeIndex + 1];
     }
 
     private double load() {
-        return (this.entries / this.sizes[curSizeIndex]);
+        return (this.entries / this.sizes[this.curSizeIndex]);
     }
 
     private int find(K k) {
@@ -96,12 +100,13 @@ public class QPHashMap<K, V> implements Map<K, V> {
 
         Pair<K, V> p;
 
-        while ((this.data[(hashValue + (index * index)) % size] != null) && (index <= size)) {
+        while ((this.data[(hashValue + (index * index)) % size]
+                != null) && (index <= size)) {
             p = this.data[(hashValue + (index * index)) % size];
             if ((p.key).equals(k)) {
-		if (p.tombstone == false) {
+                if (!p.tombstone) {
                     return ((hashValue + index * index) % size);
-		}
+                }
             }
             index++;
         }
@@ -118,16 +123,18 @@ public class QPHashMap<K, V> implements Map<K, V> {
 
     private void rehash() {
         int newSize = this.sizes[this.curSizeIndex + 1];
-	int curSize = this.sizes[this.curSizeIndex];
+        int curSize = this.sizes[this.curSizeIndex];
         Pair<K, V>[] bigger = (Pair<K, V>[])
             Array.newInstance(Pair.class, newSize);
         for (int i = 0; i < curSize; i++) {
-            if ((this.data[i] != null) && (this.data[i].tombstone == false)) {
+            if ((this.data[i] != null) && (!this.data[i].tombstone)) {
                 int index = 0;
-                while (bigger[(rehashValue(this.data[i].key) + (index * index)) % newSize] != null) {
+                while (bigger[(this.rehashValue(this.data[i].key)
+                               + (index * index)) % newSize] != null) {
                     index++;
                 }
-                bigger[(rehashValue(this.data[i].key) + (index * index)) % newSize] = this.data[i];
+                bigger[(this.rehashValue(this.data[i].key) + (index * index))
+                       % newSize] = this.data[i];
             }
         }
         this.data = bigger;
@@ -152,6 +159,7 @@ public class QPHashMap<K, V> implements Map<K, V> {
         int size = this.sizes[this.curSizeIndex];
         Pair<K, V> p = new Pair<>(k, v);
 	
+<<<<<<< HEAD
 	while (this.data[(hashValue + indexSq) % size] != null) {
 	    indexSq = index * index;
         Pair<K, V> pair = this.data[(hashValue + indexSq) % size];
@@ -172,6 +180,27 @@ public class QPHashMap<K, V> implements Map<K, V> {
 	    this.rehash();
 	}
 	return;
+=======
+        while (this.data[(hashValue + (index * index)) % size] != null && (index <= size)) {
+            Pair<K, V> pair = this.data[(hashValue + (index * index)) % size];
+            if (pair.tombstone) {
+                this.data[(hashValue + (index * index)) % size] = p;
+                this.entries++;
+                if (this.load() > .7) {
+                    this.rehash();
+                }
+                return;
+            } else {
+                index++;
+            }
+        }
+        this.data[(hashValue + (index * index)) % size] = p;
+        this.entries++;
+        if (this.load() > .7) {
+            this.rehash();
+        }
+        return;
+>>>>>>> cf544e75f9c6ff6815a0a7fb71cae8af1f6bcb55
     }
 
     /**
@@ -183,27 +212,28 @@ public class QPHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public V remove(K k) throws IllegalArgumentException {
-	if (!this.has(k)) {
-	    throw new IllegalArgumentException();
-	}
-	
-	int index = 0;
+        if (!this.has(k)) {
+            throw new IllegalArgumentException();
+        }
+
+        int index = 0;
         V v = null;
         int size = this.sizes[this.curSizeIndex];
         int hashValue = this.hash(k);
         Pair<K, V> p;
 
-        while (v == null && this.data[(hashValue + (index * index)) % size] != null) {
+        while (v == null && this.data[(hashValue + (index * index))
+                                      % size] != null) {
             p = this.data[(hashValue + (index * index)) % size];
             if ((p.key).equals(k)) {
-                if (p.tombstone == true) {
+                if (p.tombstone) {
                     return null;
                 } else {
-		    v = p.value;
-		    p.tombstone = true;
-		    this.entries--;
-		}
-	    }
+                    v = p.value;
+                    p.tombstone = true;
+                    this.entries--;
+                }
+            }
             index++;
         }
         return v;
