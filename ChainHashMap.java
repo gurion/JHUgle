@@ -124,8 +124,18 @@ public class ChainHashMap<K, V> implements Map<K, V> {
 
     private void rehash() {
         LinkedList<Pair<K, V>>[] bigger = (LinkedList<Pair<K, V>>[]) Array.newInstance(LinkedList.class, sizes[curSizeIndex + 1]);
+	//	for (int i = 0; i < sizes[curSizeIndex + 1]; i++) {
+	//    bigger[i] = new LinkedList<Pair<K, V>>();
+	//	}
         for (LinkedList<Pair<K, V>> l : this.data) {
+	    if (l == null) {
+		continue;
+	    }
             for (Pair<K, V> p : l) {
+	     	if (bigger[this.rehashValue(p.key)] == null) {
+		  LinkedList<Pair<K, V>> list = new LinkedList<>();
+		  bigger[this.rehashValue(p.key)] = list;
+	       	}
                 bigger[this.rehashValue(p.key)].add(p);
             }
         }

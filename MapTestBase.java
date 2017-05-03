@@ -72,11 +72,12 @@ public abstract class MapTestBase {
 	@Test
 	public void testIterator() {
 		int i = 0;
-		while (i < 33) {
+		while (i < 360000) {
 			map.insert(i, i*i);
+			i++;
 		}
 		int size = 0;
-		for (Integer i : map) {
+		for (Integer integer : map) {
 			size++;
 		}
 		assertEquals(size, map.size());
