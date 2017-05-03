@@ -36,4 +36,13 @@ public class QPHashMapTest extends MapTestBase {
         assertEquals(9000, size);
         assertEquals(map.size(), size);
     }
+
+    @Test
+    public void testToString() {
+        for (int i = 0; i < 5; i++) {
+            map.insert((Integer) i, (Integer) i * i);
+        }
+        String toString = "{Pair<key: 0; value: 0>, Pair<key: 1; value: 1>, Pair<key: 2; value: 4>, Pair<key: 3; value: 9>, Pair<key: 4; value: 16>, }";
+        assertEquals(map.toString(), toString);
+    }
 }
