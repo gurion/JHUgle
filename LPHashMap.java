@@ -268,7 +268,6 @@ public class LPHashMap<K, V> implements Map<K, V> {
         return new HashMapIterator();
     }
 
-/*
     private void setupStringBuilder() {
         if (this.stringBuilder == null) {
             this.stringBuilder = new StringBuilder();
@@ -281,10 +280,9 @@ public class LPHashMap<K, V> implements Map<K, V> {
     public String toString() {
         this.setupStringBuilder();
         this.stringBuilder.append("{");
-        for (Pair<K, V> : this.data) {
+        for (Pair<K, V> p: this.data) {
             this.stringBuilder.append(p.toString());
         }
         return this.stringBuilder.toString();
     }
-*/
 }

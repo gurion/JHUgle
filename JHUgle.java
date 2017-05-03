@@ -104,7 +104,7 @@ public final class JHUgle {
                         size++;
                     } else {
                         System.err.printf("Your keyword, \"%s\",", command);
-                        System.err.print(" was notfound in our database.\n");
+                        System.err.print(" was not found in our database.\n");
                     }
                     break;
             }

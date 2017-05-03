@@ -265,7 +265,7 @@ public class ChainHashMap<K, V> implements Map<K, V> {
     public String toString() {
         this.setupStringBuilder();
         this.stringBuilder.append("{");
-        for (LinkedList<Pair<K, V>> l: this.data) {
+        for (LinkedList<Pair<K, V>> l : this.data) {
             for (Pair<K, V> p : l) {
                 this.stringBuilder.append(p.toString());
             }
