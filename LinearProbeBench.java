@@ -91,6 +91,21 @@ public final class LinearProbeBench {
         }
     }
 
+    private static void putLinear(Map<Integer, Integer> m) {
+        for (int i = 0; i < SIZE; i++) {
+            m.put(i, i);
+        }
+    }
+
+    private static void putRandom(Map<Integer, Integer> m) {
+        for (int i = 0; i < SIZE; i++) {
+            int temp = RAND.nextInt(SIZE * 2);
+            if (m.has(temp)) {
+                m.put(temp, i);
+            }
+        }
+    }
+
     // Now the benchmarks we actually want to run.
 
     @Bench
@@ -206,4 +221,29 @@ public final class LinearProbeBench {
             getRandom(m, random);
         }
     }
+
+    @Bench
+    public static void putRandomProbe(Bee b) {
+        for (int n = 0; n < b.reps(); n++) {
+            b.stop();
+            Map<Integer, String> m = new LinearProbeHashMap<>();
+            insertRandom(m);
+            b.start();
+            putRandom(m);
+
+        }
+    }
+
+    @Bench
+    public static void putLinearProbe(Bee b) {
+        for (int n = 0; n < b.reps(); n++) {
+            b.stop();
+            Map<Integer, String> m = new LinearProbeHashMap<>();
+            insertLinear(m);
+            b.start();
+            putLinear(m);
+
+        }
+    }
+
 }
