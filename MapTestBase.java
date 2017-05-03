@@ -81,7 +81,7 @@ public abstract class MapTestBase {
     @Test
     public void testIterator() {
 	int i = 0;
-	while (i < 360000) {
+	while (i < 200000) {
 	    map.insert(i, i*i);
 	    i++;
 	}

@@ -54,6 +54,10 @@ public class QPHashMap<K, V> implements Map<K, V> {
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
             }
+	    if (QPHashMap.this.data[this.returned] == null) {
+		this.returned++;
+		return null;
+	    }
             K k = QPHashMap.this.data[this.returned].key;
             this.returned++;
             return k;
