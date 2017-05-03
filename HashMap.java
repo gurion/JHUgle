@@ -43,22 +43,22 @@ public class HashMap<K, V> implements Map<K, V> {
         private Iterator<Pair<K, V>> iter;
 
         HashMapIterator() {
-            this.iter = Arrays.stream(QPHashMap.this.data).iterator();
+            this.iter = Arrays.stream(HashMap.this.data).iterator();
         }
 
         public boolean hasNext() {
-            return this.returned < QPHashMap.this.entries;
+            return this.returned < HashMap.this.entries;
         }
 
         public K next() {
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
             }
-            if (QPHashMap.this.data[this.returned] == null) {
+            if (HashMap.this.data[this.returned] == null) {
                 this.returned++;
                 return null;
             }
-            K k = QPHashMap.this.data[this.returned].key;
+            K k = HashMap.this.data[this.returned].key;
             this.returned++;
             return k;
         }
