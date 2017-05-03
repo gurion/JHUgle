@@ -55,7 +55,7 @@ public final class JHUgle {
                     if (size == 0) {
                         break;
                     }
-		    urls = search.peek();
+                    urls = search.peek();
                     for (String s : urls) {
                         System.out.println(s);
                     }
@@ -64,7 +64,7 @@ public final class JHUgle {
                     if (size < 2) {
                         break;
                     }
-		    one = search.pop();
+                    one = search.pop();
                     two = search.pop();
                     for (String s : one) {
                         if (two.contains(s)) {
@@ -78,7 +78,7 @@ public final class JHUgle {
                     if (size < 2) {
                         break;
                     }
-		    one = search.pop();
+                    one = search.pop();
                     two = search.pop();
                     for (String s : one) {
                         urls.add(s);
@@ -95,7 +95,7 @@ public final class JHUgle {
                     quit = true;
                     break;
                 default:
-		    if (map.has(command)) {
+                    if (map.has(command)) {
                         urls = map.get(command);
                         search.push(urls);
                         size++;

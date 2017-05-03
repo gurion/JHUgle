@@ -158,7 +158,8 @@ public class QPHashMap<K, V> implements Map<K, V> {
         int size = this.sizes[this.curSizeIndex];
         Pair<K, V> p = new Pair<>(k, v);
 
-        while (this.data[(hashValue + (index * index)) % size] != null && (index <= size)) {
+        while (this.data[(hashValue + (index * index)) % size]
+               != null && (index <= size)) {
             Pair<K, V> pair = this.data[(hashValue + (index * index)) % size];
             if (pair.tombstone) {
                 this.data[(hashValue + (index * index)) % size] = p;
