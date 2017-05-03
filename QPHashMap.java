@@ -11,7 +11,7 @@ import java.util.Arrays;
  * @param <K> Key type.
  * @param <V> Value type.
  */
-public class LPHashMap<K, V> implements Map<K, V> {
+public class QPHashMap<K, V> implements Map<K, V> {
     private class Pair<K, V> {
         K key;
         V value;
@@ -69,7 +69,7 @@ public class LPHashMap<K, V> implements Map<K, V> {
     private double entries;
     private StringBuilder stringBuilder;
 
-    public LPHashMap() {
+    public QPHashMap() {
         this.data = (Pair<K, V>[])
             Array.newInstance(Pair.class, this.sizes[this.curSizeIndex]);
     }
@@ -122,7 +122,7 @@ public class LPHashMap<K, V> implements Map<K, V> {
         Pair<K, V>[] bigger = (Pair<K, V>[])
             Array.newInstance(Pair.class, newSize);
         for (int i = 0; i < curSize; i++) {
-            if (this.data[i] != null && this.data[i].tombstone == false) {
+            if ((this.data[i] != null) && (this.data[i].tombstone == false)) {
                 int index = 0;
                 while (bigger[(rehashValue(this.data[i].key) + (index * index)) % newSize] != null) {
                     index++;
@@ -150,6 +150,7 @@ public class LPHashMap<K, V> implements Map<K, V> {
         int index = 0;
         int size = this.sizes[this.curSizeIndex];
         Pair<K, V> p = new Pair<>(k, v);
+	
 	while (this.data[(hashValue + (index * index)) % size] != null) {
 	    Pair<K, V> pair = this.data[(hashValue + (index * index)) % size];
 	    if (pair.tombstone == true) {
