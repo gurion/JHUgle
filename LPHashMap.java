@@ -160,19 +160,14 @@ public class LPHashMap<K, V> implements Map<K, V> {
         while (this.data[(hashValue + index) % size] != null) {
             Pair<K, V> pair = this.data[(hashValue + index) % size];
             if (pair.tombstone) {
-                this.data[(hashValue + index) % size] = p;
-                this.entries++;
-                if (this.load() > .7) {
-                    this.rehash();
-                }
-                return;
+                break;
             } else {
                 index++;
             }
         }
         this.data[(hashValue + index) % size] = p;
         this.entries++;
-        if (this.load() > .7) {
+        if (this.load() > .5) {
             this.rehash();
         }
         return;

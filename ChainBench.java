@@ -23,7 +23,7 @@ import java.util.Random;
  * Your benchmarking code for two classes will also be a bit messy. :-/
  */
 public final class ChainBench {
-    private static final int SIZE = 200; // you may need to tweak this...
+    private static final int SIZE = 300; // you may need to tweak this...
     private static final Random RAND = new Random();
 
     private ChainBench() {}
@@ -106,12 +106,9 @@ public final class ChainBench {
         }
     }
 
-    private static void putRandom(Map<Integer, Integer> m) {
+    private static void putRandom(Map<Integer, Integer> m, int[] rand) {
         for (int i = 0; i < SIZE; i++) {
-            int temp = RAND.nextInt(SIZE * 2);
-            if (m.has(temp)) {
-                m.put(temp, i);
-            }
+            m.put(rand[i], i);
         }
     }
 
@@ -262,6 +259,22 @@ public final class ChainBench {
             getRandom(m, random);
         }
     }
+    
+    /** put linear chain.
+     *
+     * @param b bee.
+     */
+    @Bench
+    public static void putLinearChain(Bee b) {
+        for (int n = 0; n < b.reps(); n++) {
+            b.stop();
+            Map<Integer, Integer> m = new ChainHashMap<>();
+            insertLinear(m);
+            b.start();
+            putLinear(m);
+
+        }
+    }
 
     /** put random chain.
      *
@@ -271,27 +284,14 @@ public final class ChainBench {
     public static void putRandomChain(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, String> m = new ChainHashMap<>();
-            insertRandom(m);
+            Map<Integer, Integer> m = new LPHashMap<>();
+            int[] random = new int[SIZE];
+            fillArray(random);
+            makeRandomArray(random);
+            insertRandom(m, random);
+            makeRandomArray(random);
             b.start();
-            putRandom(m);
-
-        }
-    }
-
-    /** put linear chain.
-     *
-     * @param b bee.
-     */
-    @Bench
-    public static void putLinearChain(Bee b) {
-        for (int n = 0; n < b.reps(); n++) {
-            b.stop();
-            Map<Integer, String> m = new ChainHashMap<>();
-            insertLinear(m);
-            b.start();
-            putLinear(m);
-
+            putRandom(m, random);
         }
     }
 }

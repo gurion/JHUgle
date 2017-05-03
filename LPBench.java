@@ -23,7 +23,7 @@ import java.util.Random;
  * Your benchmarking code for two classes will also be a bit messy. :-/
 */
 public final class LPBench {
-    private static final int SIZE = 200; // you may need to tweak this...
+    private static final int SIZE = 300; // you may need to tweak this...
     private static final Random RAND = new Random();
 
     /** Make checkstyle happy. */
