@@ -98,8 +98,10 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
 
         while ((this.data[(hashValue + index) % size] != null) && (index <= size)) {
             p = this.data[(hashValue + index) % size];
-            if ((p.key).equals(k) && (p.tombstone == false)) {
+            if ((p.key).equals(k)) {
+		if (p.tombstone == false) {
                     return ((hashValue + index) % size);
+		}
             }
             index++;
         }
@@ -149,8 +151,8 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
         int size = this.sizes[this.curSizeIndex];
         Pair<K, V> p = new Pair<>(k, v);
 	while (this.data[(hashValue + index) % size] != null) {
-	    p = this.data[(hashValue + index) % size];
-	    if (p.tombstone == true) {
+	    Pair<K, V> pair = this.data[(hashValue + index) % size];
+	    if (pair.tombstone == true) {
 		this.data[(hashValue + index) % size] = p;
 		this.entries++;
 		if (this.load() > .7) {
@@ -178,7 +180,11 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public V remove(K k) throws IllegalArgumentException {
-        int index = 0;
+	if (!this.has(k)) {
+	    throw new IllegalArgumentException();
+	}
+	
+	int index = 0;
         V v = null;
         int size = this.sizes[this.curSizeIndex];
         int hashValue = this.hash(k);
@@ -189,12 +195,12 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
             if ((p.key).equals(k)) {
                 if (p.tombstone == true) {
                     return null;
-                }
-            } else {
-                v = p.value;
-                p.tombstone = true;
-                this.entries--;
-            }
+                } else {
+		    v = p.value;
+		    p.tombstone = true;
+		    this.entries--;
+		}
+	    }
             index++;
         }
         return v;
