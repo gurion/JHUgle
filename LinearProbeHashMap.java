@@ -1,6 +1,10 @@
 //Gurion Marks
 //gmarks2
 
+import java.util.Iterator;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 /**
  * Linear probe HashMap implementation.
  *
@@ -8,14 +12,23 @@
  * @param <V> Value type.
  */
 public class LinearProbeHashMap<K, V> implements Map<K, V> {
-    private class Pair {
+    private class Pair<K, V> {
         K key;
         V value;
-        Pair next;
+        boolean tombstone;
 
-        Pair(K k, V v, Pair n) {
+        Pair(K k, V v) {
             this.key = k;
             this.value = v;
+            this.tombstone = false;
+        }
+        public boolean equals(Object that) {
+            return (that instanceof Pair)
+                && (this.key.equals(((Pair) that).key));
+        }
+
+        public int hashCode() {
+            return this.key.hashCode();
         }
 
         public String toString() {
@@ -23,49 +36,93 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
         }
     }
 
-    private Pair[] data;
-    private int[] sizes = {2, 5, 11, 17, 33, 67, 127, 257, 509, 1031,
-                           2053, 4093, 8191, 16381, 32771, 65537, 131071,
-                           262139, 524287, 1048573, 2097143, 4194301, 8388593,
-                           16777213, 33554393, 67108859, 134217689, 268435399,
-                           536870909, 1073741789, 2147483647, };
+    // inner class , not nested ! look ma, no static !
+    private class HashMapIterator implements Iterator<K> {
+        private int returned;
+        private Iterator<Pair<K, V>> iter;
+
+        HashMapIterator() {
+            this.iter = Arrays.stream(LinearProbeHashMap.this.data).iterator();
+        }
+
+        public boolean hasNext() {
+            return this.returned < LinearProbeHashMap.this.entries;
+        }
+
+        public K next() {
+            if (!this.hasNext()) {
+                throw new NoSuchElementException();
+            }
+            K k = LinearProbeHashMap.this.data[this.returned].key;
+            this.returned++;
+            return k;
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    private Pair<K, V>[] data;
+    private int[] sizes = {3, 7, 31, 127, 8191, 131071, 524287, 2147483647, };
     private int curSizeIndex;
     private double entries;
+    private StringBuilder stringBuilder;
 
-    private int hash(Pair[] array, K key) {
+    private int hash(K key) {
         return (key.hashCode() & 0x7FFFFFFF) % this.sizes[this.curSizeIndex];
     }
 
-    private int rehashValue(int hashValue) {
-        return (hashValue & 0x7FFFFFFF) % (this.sizes[this.curSizeIndex + 1]);
+    private int rehashValue(K key) {
+        return (key.hashCode() & 0x7FFFFFFF) % this.sizes[this.curSizeIndex + 1];
     }
 
     private double load() {
-        return (this.entries / this.data.length);
+        return (this.entries / this.sizes[curSizeIndex]);
     }
 
     private int find(K k) {
         if (k == null) {
-            throw new IllegalArgumentException("Can't handle null key");
+            throw new IllegalArgumentException();
         }
-        int index = hash(k);
-        Pair p = this.data[index];
-        while (!p.key.equals(k)) {
-            index++;
-            if (p.key.equals(k)) {
-                return index;
+        int index = 0;
+        int hashValue = this.hash(k);
+        int size = this.sizes[this.curSizeIndex];
+
+        Pair<K, V> p;
+
+        while ((this.data[(hashValue + index) % size] != null) && (index <= size)) {
+            p = this.data[(hashValue + index) % size];
+            if ((p.key).equals(k) && (p.tombstone == false)) {
+                    return ((hashValue + index) % size);
             }
+            index++;
         }
         return -1;
+    }
+
+    private int findForSure(K k) throws IllegalArgumentException {
+        int index = this.find(k);
+        if (index == -1) {
+            throw new IllegalArgumentException();
+        }
+        return index;
     }
 
     private void rehash() {
         int newSize = this.sizes[this.curSizeIndex + 1];
         Pair[] bigger = (Pair[]) new Object[newSize];
-        for (Pair p : this.data) {
-            this.put(bigger, p.key, p.value);
+        for (int i = 0; i < this.sizes[this.curSizeIndex]; i++) {
+            if (this.data[i] != null && this.data[i].tombstone == false) {
+                int index = 0;
+                while (bigger[(hash(this.data[i].key) + index) % newSize] != null) {
+                    index++;
+                }
+                bigger[(hash(this.data[i].key) + index) % newSize] = this.data[i];
+            }
         }
         this.data = bigger;
+        this.curSizeIndex++;
     }
 
     /**
@@ -77,7 +134,48 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public void insert(K k, V v) throws IllegalArgumentException {
-
+        if (k == null || this.has(k)) {
+            throw new IllegalArgumentException();
+        }
+        int hashValue = this.hash(k);
+        int index = 0;
+        int size = this.sizes[this.curSizeIndex];
+        Pair<K, V> p = new Pair<>(k, v);
+        if (this.data[hashValue] == null) {
+            this.data[hashValue] = p;
+            this.entries++;
+            if (this.load() > .7) {
+                this.rehash();
+            }
+            return;
+        } else if (this.data[hashValue].tombstone == true) {
+            this.data[hashValue] = p;
+            this.entries++;
+            if (this.load() > .7) {
+                this.rehash();
+            }
+            return;
+        } else {
+            while (this.data[(hashValue + index) % size] != null) {
+                p = this.data[(hashValue + index) % size];
+                if (p.tombstone == true) {
+                    this.data[(hashValue + index) % size] = p;
+                    this.entries++;
+                    if (this.load() > .7) {
+                        this.rehash();
+                    }
+                    return;
+                } else {
+                    index++;
+                } 
+            }
+            this.data[(hashValue + index) % size] = p;
+            this.entries++;
+            if (this.load() > .7) {
+                this.rehash();
+            }
+            return;
+        }
     }
 
     /**
@@ -89,7 +187,26 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public V remove(K k) throws IllegalArgumentException {
-        return null;
+        int index = 0;
+        V v = null;
+        int size = this.sizes[this.curSizeIndex];
+        int hashValue = this.hash(k);
+        Pair<K, V> p;
+
+        while (v == null && this.data[(hashValue + index) % size] != null) {
+            p = this.data[(hashValue + index) % size];
+            if ((p.key).equals(k)) {
+                if (p.tombstone == true) {
+                    return null;
+                }
+            } else {
+                v = p.value;
+                p.tombstone = true;
+                this.entries--;
+            }
+            index++;
+        }
+        return v;
     }
 
     /**
@@ -101,7 +218,8 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public void put(K k, V v) throws IllegalArgumentException {
-
+        int index = this.findForSure(k);
+        this.data[index].value = v;
     }
 
     /**
@@ -113,7 +231,8 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public V get(K k) throws IllegalArgumentException {
-        return null;
+        return this.data[this.findForSure(k)].value;
+
     }
 
     /**
@@ -124,11 +243,7 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
      */
     @Override
     public boolean has(K k) {
-        Pair p = this.find(k);
-        if (p == null) {
-            return false;
-        }
-        return true;
+        return (this.find(k) != -1);
     }
 
     /**
@@ -147,6 +262,7 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
      * @return Iterator.
      */
     public Iterator<K> iterator() {
+        /*
         List<K> keys = new ArrayList<K>();
         Pair<K, V> p;
         for (int i = 0; i < this.data.length; i++) {
@@ -154,8 +270,11 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
                 keys.add(this.data[i]);
             }
         }
+        */
+        return new HashMapIterator();
     }
 
+/*
     private void setupStringBuilder() {
         if (this.stringBuilder == null) {
             this.stringBuilder = new StringBuilder();
@@ -168,5 +287,10 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
     public String toString() {
         this.setupStringBuilder();
         this.stringBuilder.append("{");
+        for (Pair<K, V> : this.data) {
+            this.stringBuilder.append(p.toString());
+        }
+        return this.stringBuilder.toString();
     }
+*/
 }
