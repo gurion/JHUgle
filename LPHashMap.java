@@ -283,6 +283,7 @@ public class LPHashMap<K, V> implements Map<K, V> {
         for (Pair<K, V> p: this.data) {
             this.stringBuilder.append(p.toString());
         }
+        this.stringBuilder.append("}");
         return this.stringBuilder.toString();
     }
 }

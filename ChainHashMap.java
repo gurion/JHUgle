@@ -270,6 +270,7 @@ public class ChainHashMap<K, V> implements Map<K, V> {
                 this.stringBuilder.append(p.toString());
             }
         }
+        this.stringBuilder.append("}");
         return this.stringBuilder.toString();
     }
 }
