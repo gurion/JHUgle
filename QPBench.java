@@ -22,12 +22,12 @@ import java.util.Random;
  * instantiate and initialize a number of different set implementations.
  * Your benchmarking code for two classes will also be a bit messy. :-/
 */
-public final class LPBench {
+public final class QPBench {
     private static final int SIZE = 200; // you may need to tweak this...
     private static final Random RAND = new Random();
 
     /** Make checkstyle happy. */
-    private LPBench() {}
+    private QPBench() {}
 
     // First some basic "compound operations" to benchmark. Note that each
     // of these is carefully dimensioned (regarding the range of elements)
@@ -120,10 +120,10 @@ public final class LPBench {
      * @param b bee.
      */
     @Bench
-    public static void insertLinearLP(Bee b) {
+    public static void insertLinearQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new LPHashMap<>();
+            Map<Integer, Integer> m = new QPHashMap<>();
             b.start();
             insertLinear(m);
         }
@@ -134,10 +134,10 @@ public final class LPBench {
      * @param b bee.
      */
     @Bench
-    public static void insertRandomLP(Bee b) {
+    public static void insertRandomQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new LPHashMap<>();
+            Map<Integer, Integer> m = new QPHashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -151,10 +151,10 @@ public final class LPBench {
      * @param b bee.
      */
     @Bench
-    public static void removeLinearLP(Bee b) {
+    public static void removeLinearQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new LPHashMap<>();
+            Map<Integer, Integer> m = new QPHashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -170,10 +170,10 @@ public final class LPBench {
      * @param b bee.
      */
     @Bench
-    public static void removeRandomLP(Bee b) {
+    public static void removeRandomQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new LPHashMap<>();
+            Map<Integer, Integer> m = new QPHashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -189,10 +189,10 @@ public final class LPBench {
      * @param b bee.
      */
     @Bench
-    public static void lookupLinearLP(Bee b) {
+    public static void lookupLinearQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new LPHashMap<>();
+            Map<Integer, Integer> m = new QPHashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -208,10 +208,10 @@ public final class LPBench {
      * @param b bee.
      */
     @Bench
-    public static void lookupRandomLP(Bee b) {
+    public static void lookupRandomQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new LPHashMap<>();
+            Map<Integer, Integer> m = new QPHashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -227,10 +227,10 @@ public final class LPBench {
      * @param b bee.
      */
     @Bench
-    public static void getLinearLP(Bee b) {
+    public static void getLinearQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new LPHashMap<>();
+            Map<Integer, Integer> m = new QPHashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -246,10 +246,10 @@ public final class LPBench {
      * @param b bee.
      */
     @Bench
-    public static void getRandomLP(Bee b) {
+    public static void getRandomQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new LPHashMap<>();
+            Map<Integer, Integer> m = new QPHashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
@@ -265,10 +265,10 @@ public final class LPBench {
      * @param b bee.
      */
     @Bench
-    public static void putLinearLP(Bee b) {
+    public static void putLinearQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new LPHashMap<>();
+            Map<Integer, Integer> m = new QPHashMap<>();
             insertLinear(m);
             b.start();
             putLinear(m);
@@ -281,10 +281,10 @@ public final class LPBench {
      * @param b bee.
      */
     @Bench
-    public static void putRandomLP(Bee b) {
+    public static void putRandomQP(Bee b) {
         for (int n = 0; n < b.reps(); n++) {
             b.stop();
-            Map<Integer, Integer> m = new LPHashMap<>();
+            Map<Integer, Integer> m = new QPHashMap<>();
             int[] random = new int[SIZE];
             fillArray(random);
             makeRandomArray(random);
