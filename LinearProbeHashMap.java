@@ -69,6 +69,10 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
     private double entries;
     private StringBuilder stringBuilder;
 
+    public LinearProbeHashMap() {
+	this.data = (Pair<K, V>) new ;
+    }
+    
     private int hash(K key) {
         return (key.hashCode() & 0x7FFFFFFF) % this.sizes[this.curSizeIndex];
     }
@@ -111,7 +115,7 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
 
     private void rehash() {
         int newSize = this.sizes[this.curSizeIndex + 1];
-        Pair[] bigger = (Pair[]) new Object[newSize];
+        Pair<K, V>[] bigger = (Pair<K, V>[]) new Object[newSize];
         for (int i = 0; i < this.sizes[this.curSizeIndex]; i++) {
             if (this.data[i] != null && this.data[i].tombstone == false) {
                 int index = 0;
