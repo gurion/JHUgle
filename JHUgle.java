@@ -103,7 +103,8 @@ public final class JHUgle {
                         search.push(urls);
                         size++;
                     } else {
-                        System.err.printf("Your keyword, \"%s\", was not found in our database.\n", command);
+                        System.err.printf("Your keyword, \"%s\",", command);
+                        System.err.print(" was notfound in our database.\n");
                     }
                     break;
             }
