@@ -1,9 +1,159 @@
 Gurion Marks
-gmarks2
-gurion@jhu.edu
 Angelica Walker
-awalke57
+gmarks2@jhu.edu
 awalke57@jhu.edu
-600.226.02
-05/03/17
 Assignment 9
+
+OVERVIEW:
+	Files:
+		JHUgle.java
+			Search engine driver.
+			phf1.txt and random164.txt are data files
+			testLoad contains an exclamation point
+		HashMap.java
+			This is just a copy of QPHashMap, named for grading and 
+			JHUgle.
+			Test with HashMapTest.java
+			Benchmark with HashMapBench.java
+		ChainHashMap.java
+			Separate Chaining implementation.
+			Test with ChainHashMapTest.java
+			Benchmark with ChainBench.java
+		LPHashMap.java
+			Linear Probing implementation.
+			Test with LPHashMapTest.java
+			Benchmark with LPBench.java
+		QPHashMap.java
+			Quadratic Probing implementation.
+			Test with QPHashMapTest.java
+			Benchmark with QPBench.java
+		MapTestBase.java
+			A suite of tests for maps.
+		AvlTreeMap and TreapMap, as well as their benchmarks and 
+		tests, were included as something to compare against.
+		
+		Several interfaces and exceptions may also be found in this 
+		directory
+
+		See git log for individual contribution.
+
+INCREMENTAL DESIGN AND PARTNER PROGRAMMING:
+	Front End:
+		To start JHUgle, I used an AVL tree map. I thought that this 
+		would give me a relatively good idea of how fast my program 
+		should load. I also tried different internal data structures 
+		in the stack to optimize performance in JHUgle. I found that 
+		ArrayList was the best. I tried other structures, such as 
+		sets or trees, but found that they all took either just as 
+		long or longer, and stuck with ArrayList for my data 
+		structure in the stack. I make the stack contain lists of 
+		URLs. The functions either union or intersect lists in the 
+		stack, or find lists of URLs in the map and push them onto 
+		the stack. If an operation can't be completed, it outputs to 
+		standard error. 
+	
+	Back End:
+		I started with separate chaining. It seemed the most 
+		intuitive and easiest to implement, or at least with the 
+		least math and fiddling. I ended up using an array with 
+		linked lists of key, value pairs for this data structure. I 
+		had a few issues on the iterator, but after accounting for 
+		the fact that untouched spots in the array will be null, 
+		figured it out. I tried to use as little memory as possible 
+		by only allocating a new linked list if necessary in that 
+		index of the array. For testing, I used my existing map test 
+		base, and added two functions to the specific tests. These 
+		tested that the map grew and rehashed, and tested the 
+		toString. I used my existing benchmarks from the Trees, 
+		slightly modified for benchmarking.
+		I then moved to linear probing, as I figured that the jump 
+		to quadratic from there would be relatively easy. I used an 
+		array of key, value pairs. I also created an array of sizes, 
+		using mersenne's primes, to ensure that 1) it does not 
+		rehash too much, and 2) the length of the array is always 
+		prime so as to minimize collisions. From here, I made the 
+		quadratic probing, by squaring the probe value used. With 
+		these two, I also tested with map test base and a specific 
+		tester for the growing and toString. I benchmarked the same 
+		way.
+		I had a draft for double hashing, but did not finish it, so I did not include it here. I would assume that it would be the fastest of all, as I was using an array with buckets as Linear Probe Hash Maps.
+		Data found below.
+
+DATA:
+
+Benchmark:
+
+Size = 300
+Run 3 times, results stable to a few hundred ns/op.
+CH = Separate Chaining, LP = Linear Probing, QP = Quadratic Probing
+AVL = AvlTreeMap, Treap = TreapMap
+
+   getLinearCH	       200,000	         5,761 ns/op	           
+   getRandomCH	       200,000	         7,105 ns/op	          
+insertLinearCH	       100,000	        20,496 ns/op	           
+insertRandomCH	        50,000	        24,535 ns/op	           
+lookupLinearCH	       200,000	         5,693 ns/op	        
+lookupRandomCH	       200,000	         6,758 ns/op	         
+   putLinearCH	       200,000	         6,082 ns/op	         
+   putRandomCH	       200,000	         9,964 ns/op	        
+removeLinearCH	       100,000	        11,708 ns/op	         
+removeRandomCH	       100,000	        13,590 ns/op
+
+   getLinearLP	       200,000	         6,646 ns/op	         
+   getRandomLP	       200,000	         8,245 ns/op	           
+insertLinearLP	       100,000	        15,599 ns/op	         
+insertRandomLP	       100,000	        19,704 ns/op	          
+lookupLinearLP	       200,000	         6,119 ns/op	          
+lookupRandomLP	       200,000	         7,638 ns/op	          
+   putLinearLP	       200,000	         8,414 ns/op	         
+   putRandomLP	       200,000	        10,256 ns/op	          
+removeLinearLP	       200,000	        10,980 ns/op	          
+removeRandomLP	       100,000	        12,396 ns/op
+
+   getLinearQP	       200,000	         5,341 ns/op	           
+   getRandomQP	       200,000	         7,056 ns/op	          
+insertLinearQP	       100,000	        16,305 ns/op	           
+insertRandomQP	       100,000	        19,678 ns/op	        
+lookupLinearQP	       300,000	         4,833 ns/op	        
+lookupRandomQP	       200,000	         6,577 ns/op	         
+   putLinearQP	       200,000	         7,457 ns/op	        
+   putRandomQP	       200,000	         8,816 ns/op	        
+removeLinearQP	       200,000	         9,616 ns/op	           
+removeRandomQP	       100,000	        10,952 ns/op	            
+
+   getLinearAVL	       100,000	        17,463 ns/op	           
+   getRandomAVL	       100,000	        23,991 ns/op	           
+insertLinearAVL	        50,000	        32,078 ns/op	            
+insertRandomAVL	        30,000	        47,787 ns/op	           
+lookupLinearAVL	       100,000	        18,385 ns/op	        
+lookupRandomAVL	        50,000	        26,439 ns/op	          
+removeLinearAVL	        50,000	        29,451 ns/op	           
+removeRandomAVL	        20,000	        61,806 ns/op
+
+   getLinearTreap	   100,000	        25,441 ns/op	
+   getRandomTreap       50,000	        31,433 ns/op	
+insertLinearTrea        20,000	        64,484 ns/op	         
+insertRandomTreap       20,000	        95,843 ns/op	        
+lookupLinearTreap	   100,000	        22,962 ns/op	
+lookupRandomTreap	    50,000	        29,254 ns/op	
+removeLinearTreap	    50,000	        25,460 ns/op	
+removeRandomTreap	    20,000	        65,843 ns/op	        
+
+xtime:
+Command was ./xtime java JHUgle random164.txt < testLoad.txt
+testLoad.txt contains only an exclamation point
+The average of 5 trials was taken for each. 
+
+	AVL:
+	Treap:
+	Separate Chaining:
+	Linear Probe:
+	Quadratic Probe:
+
+ANALYSIS:
+	For the most part, 
+
+
+
+
+

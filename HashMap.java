@@ -11,7 +11,7 @@ import java.util.Arrays;
  * @param <K> Key type.
  * @param <V> Value type.
  */
-public class LPHashMap<K, V> implements Map<K, V> {
+public class HashMap<K, V> implements Map<K, V> {
     private class Pair<K, V> {
         K key;
         V value;
@@ -43,22 +43,22 @@ public class LPHashMap<K, V> implements Map<K, V> {
         private Iterator<Pair<K, V>> iter;
 
         HashMapIterator() {
-            this.iter = Arrays.stream(LPHashMap.this.data).iterator();
+            this.iter = Arrays.stream(QPHashMap.this.data).iterator();
         }
 
         public boolean hasNext() {
-            return this.returned < LPHashMap.this.entries;
+            return this.returned < QPHashMap.this.entries;
         }
 
         public K next() {
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
             }
-            if (LPHashMap.this.data[this.returned] == null) {
+            if (QPHashMap.this.data[this.returned] == null) {
                 this.returned++;
                 return null;
             }
-            K k = LPHashMap.this.data[this.returned].key;
+            K k = QPHashMap.this.data[this.returned].key;
             this.returned++;
             return k;
         }
@@ -75,7 +75,7 @@ public class LPHashMap<K, V> implements Map<K, V> {
     private StringBuilder stringBuilder;
 
     /** Constructor. */
-    public LPHashMap() {
+    public HashMap() {
         this.data = (Pair<K, V>[])
             Array.newInstance(Pair.class, this.sizes[this.curSizeIndex]);
     }
@@ -104,12 +104,12 @@ public class LPHashMap<K, V> implements Map<K, V> {
 
         Pair<K, V> p;
 
-        while ((this.data[(hashValue + index) % size] != null)
-               && (index <= size)) {
-            p = this.data[(hashValue + index) % size];
+        while ((this.data[(hashValue + (index * index)) % size]
+                != null) && (index <= size)) {
+            p = this.data[(hashValue + (index * index)) % size];
             if ((p.key).equals(k)) {
                 if (!p.tombstone) {
-                    return ((hashValue + index) % size);
+                    return ((hashValue + index * index) % size);
                 }
             }
             index++;
@@ -133,11 +133,11 @@ public class LPHashMap<K, V> implements Map<K, V> {
         for (int i = 0; i < curSize; i++) {
             if ((this.data[i] != null) && (!this.data[i].tombstone)) {
                 int index = 0;
-                while (bigger[(this.rehashValue(this.data[i].key) + index)
-                              % newSize] != null) {
+                while (bigger[(this.rehashValue(this.data[i].key)
+                               + (index * index)) % newSize] != null) {
                     index++;
                 }
-                bigger[(this.rehashValue(this.data[i].key) + index)
+                bigger[(this.rehashValue(this.data[i].key) + (index * index))
                        % newSize] = this.data[i];
             }
         }
@@ -161,10 +161,12 @@ public class LPHashMap<K, V> implements Map<K, V> {
         int index = 0;
         int size = this.sizes[this.curSizeIndex];
         Pair<K, V> p = new Pair<>(k, v);
-        while (this.data[(hashValue + index) % size] != null) {
-            Pair<K, V> pair = this.data[(hashValue + index) % size];
+
+        while (this.data[(hashValue + (index * index)) % size]
+               != null && (index <= size)) {
+            Pair<K, V> pair = this.data[(hashValue + (index * index)) % size];
             if (pair.tombstone) {
-                this.data[(hashValue + index) % size] = p;
+                this.data[(hashValue + (index * index)) % size] = p;
                 this.entries++;
                 if (this.load() > .5) {
                     this.rehash();
@@ -174,7 +176,7 @@ public class LPHashMap<K, V> implements Map<K, V> {
                 index++;
             }
         }
-        this.data[(hashValue + index) % size] = p;
+        this.data[(hashValue + (index * index)) % size] = p;
         this.entries++;
         if (this.load() > .5) {
             this.rehash();
@@ -201,8 +203,9 @@ public class LPHashMap<K, V> implements Map<K, V> {
         int hashValue = this.hash(k);
         Pair<K, V> p;
 
-        while (v == null && this.data[(hashValue + index) % size] != null) {
-            p = this.data[(hashValue + index) % size];
+        while (v == null && this.data[(hashValue + (index * index))
+                                      % size] != null) {
+            p = this.data[(hashValue + (index * index)) % size];
             if ((p.key).equals(k)) {
                 if (p.tombstone) {
                     return null;
@@ -285,7 +288,7 @@ public class LPHashMap<K, V> implements Map<K, V> {
     public String toString() {
         this.setupStringBuilder();
         this.stringBuilder.append("{");
-        for (Pair<K, V> p: this.data) {
+        for (Pair<K, V> p : this.data) {
             this.stringBuilder.append(p.toString());
             this.stringBuilder.append(", ");
         }
