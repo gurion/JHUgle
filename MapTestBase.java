@@ -69,6 +69,19 @@ public abstract class MapTestBase {
 		assertEquals(map.size(), 0);
 	}
 
+	@Test
+	public void testIterator() {
+		int i = 0;
+		while (i < 33) {
+			map.insert(i, i*i);
+		}
+		int size = 0;
+		for (Integer i : map) {
+			size++;
+		}
+		assertEquals(size, map.size());
+	}
+
 	@Test (expected=IllegalArgumentException.class)
 	public void insertException() {
 		map.insert(1, 1);
