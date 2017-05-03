@@ -116,15 +116,16 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
 
     private void rehash() {
         int newSize = this.sizes[this.curSizeIndex + 1];
+	int curSize = this.sizes[this.curSizeIndex];
         Pair<K, V>[] bigger = (Pair<K, V>[])
             Array.newInstance(Pair.class, newSize);
-        for (int i = 0; i < this.sizes[this.curSizeIndex]; i++) {
+        for (int i = 0; i < curSize; i++) {
             if (this.data[i] != null && this.data[i].tombstone == false) {
                 int index = 0;
-                while (bigger[(hash(this.data[i].key) + index) % newSize] != null) {
+                while (bigger[(rehashValue(this.data[i].key) + index) % newSize] != null) {
                     index++;
                 }
-                bigger[(hash(this.data[i].key) + index) % newSize] = this.data[i];
+                bigger[(rehashValue(this.data[i].key) + index) % newSize] = this.data[i];
             }
         }
         this.data = bigger;
@@ -147,41 +148,25 @@ public class LinearProbeHashMap<K, V> implements Map<K, V> {
         int index = 0;
         int size = this.sizes[this.curSizeIndex];
         Pair<K, V> p = new Pair<>(k, v);
-        if (this.data[hashValue] == null) {
-            this.data[hashValue] = p;
-            this.entries++;
-            if (this.load() > .7) {
-                this.rehash();
-            }
-            return;
-        } else if (this.data[hashValue].tombstone == true) {
-            this.data[hashValue] = p;
-            this.entries++;
-            if (this.load() > .7) {
-                this.rehash();
-            }
-            return;
-        } else {
-            while (this.data[(hashValue + index) % size] != null) {
-                p = this.data[(hashValue + index) % size];
-                if (p.tombstone == true) {
-                    this.data[(hashValue + index) % size] = p;
-                    this.entries++;
-                    if (this.load() > .7) {
-                        this.rehash();
-                    }
-                    return;
-                } else {
-                    index++;
-                } 
-            }
-            this.data[(hashValue + index) % size] = p;
-            this.entries++;
-            if (this.load() > .7) {
-                this.rehash();
-            }
-            return;
-        }
+	while (this.data[(hashValue + index) % size] != null) {
+	    p = this.data[(hashValue + index) % size];
+	    if (p.tombstone == true) {
+		this.data[(hashValue + index) % size] = p;
+		this.entries++;
+		if (this.load() > .7) {
+		    this.rehash();
+		}
+		return;
+	    } else {
+		index++;
+                }
+	}
+	this.data[(hashValue + index) % size] = p;
+	this.entries++;
+	if (this.load() > .7) {
+	    this.rehash();
+	}
+	return;
     }
 
     /**
