@@ -41,7 +41,7 @@ public class ChainHashMap<K, V> implements Map<K, V> {
     // inner class , not nested ! look ma, no static !
     private class HashMapIterator implements Iterator <K> {
         private int returned = 0;
-        private Iterator<TreeSet<Pair<K, V>>> outer;
+        private Iterator<LinkedList<Pair<K, V>>> outer;
         private Iterator<Pair<K, V>> inner;
         
         HashMapIterator() {
@@ -75,14 +75,14 @@ public class ChainHashMap<K, V> implements Map<K, V> {
         }
     }
 
-    private TreeSet<Pair<K, V>>[] data;
+    private LinkedList<Pair<K, V>>[] data;
     private int[] sizes = {3, 7, 31, 127, 8191, 131071, 524287, 2147483647, };
     private int curSizeIndex = 0;
     private double entries;
     private StringBuilder stringBuilder;
 
     public ChainHashMap() {
-        this.data = (TreeSet<Pair<K, V>>[]) Array.newInstance(TreeSet.class, sizes[curSizeIndex]);
+        this.data = (LinkedList<Pair<K, V>>[]) Array.newInstance(LinkedList.class, sizes[curSizeIndex]);
     }
 
     private int hash(K key) {
@@ -101,8 +101,12 @@ public class ChainHashMap<K, V> implements Map<K, V> {
         if (k == null) {
             throw new IllegalArgumentException("Can't handle null key");
         }
-        for(Pair<K, V> p : this.data[this.hash(k)]) {
-            if (p.key.equals(k)) {
+	LinkedList<Pair<K, V>> list = this.data[this.hash(k)];
+	if (list == null) {
+	    return null;
+	}
+        for(Pair<K, V> p : list) {
+	    if (p.key.equals(k)) {
                 return p;
             }
         }
@@ -119,13 +123,14 @@ public class ChainHashMap<K, V> implements Map<K, V> {
     }
 
     private void rehash() {
-        TreeSet<Pair<K, V>>[] bigger = (TreeSet<Pair<K, V>>[]) Array.newInstance(TreeSet.class, sizes[curSizeIndex + 1]);
-        for (TreeSet<Pair<K, V>> t : this.data) {
-            for (Pair<K, V> p : t) {
+        LinkedList<Pair<K, V>>[] bigger = (LinkedList<Pair<K, V>>[]) Array.newInstance(LinkedList.class, sizes[curSizeIndex + 1]);
+        for (LinkedList<Pair<K, V>> l : this.data) {
+            for (Pair<K, V> p : l) {
                 bigger[this.rehashValue(p.key)].add(p);
             }
         }
         this.data = bigger;
+	curSizeIndex++;
     }
 
     /**
@@ -141,7 +146,13 @@ public class ChainHashMap<K, V> implements Map<K, V> {
             throw new IllegalArgumentException();
         }
         Pair<K, V> p = new Pair<>(k, v);
-        this.data[this.hash(k)].add(p);
+        if (this.data[this.hash(k)] == null) {
+	    LinkedList<Pair<K, V>> t = new LinkedList<Pair<K, V>>();
+	    t.add(p);
+	    this.data[this.hash(k)] = t;
+	} else {
+	    this.data[this.hash(k)].add(p);
+	}
         this.entries++;
 
         if (this.load() > .7) {
@@ -232,8 +243,8 @@ public class ChainHashMap<K, V> implements Map<K, V> {
     public String toString() {
         this.setupStringBuilder();
         this.stringBuilder.append("{");
-        for (TreeSet<Pair<K, V>> t: this.data) {
-            for (Pair<K, V> p : t) {
+        for (LinkedList<Pair<K, V>> l: this.data) {
+            for (Pair<K, V> p : l) {
                 this.stringBuilder.append(p.toString());
             }
         }
