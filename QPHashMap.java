@@ -155,32 +155,9 @@ public class QPHashMap<K, V> implements Map<K, V> {
         }
         int hashValue = this.hash(k);
         int index = 0;
-        int indexSq = 0;
         int size = this.sizes[this.curSizeIndex];
         Pair<K, V> p = new Pair<>(k, v);
-	
-<<<<<<< HEAD
-	while (this.data[(hashValue + indexSq) % size] != null) {
-	    indexSq = index * index;
-        Pair<K, V> pair = this.data[(hashValue + indexSq) % size];
-	    if (pair.tombstone == true) {
-		this.data[(hashValue + indexSq) % size] = p;
-		this.entries++;
-		if (this.load() > .7) {
-		    this.rehash();
-		}
-		return;
-	    } else {
-		index++;
-                }
-	}
-	this.data[(hashValue + indexSq) % size] = p;
-	this.entries++;
-	if (this.load() > .7) {
-	    this.rehash();
-	}
-	return;
-=======
+
         while (this.data[(hashValue + (index * index)) % size] != null && (index <= size)) {
             Pair<K, V> pair = this.data[(hashValue + (index * index)) % size];
             if (pair.tombstone) {
@@ -200,7 +177,6 @@ public class QPHashMap<K, V> implements Map<K, V> {
             this.rehash();
         }
         return;
->>>>>>> cf544e75f9c6ff6815a0a7fb71cae8af1f6bcb55
     }
 
     /**
