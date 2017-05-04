@@ -144,14 +144,14 @@ Command was ./xtime java JHUgle random164.txt < testLoad.txt
 testLoad.txt contains only an exclamation point
 The average of 5 trials was taken for each. 
 
-	AVL:
-	Treap:
-	Separate Chaining:
-	Linear Probe:
-	Quadratic Probe:
+	AVL:				4.60 seconds
+	Treap:				6.35 seconds
+	Separate Chaining:	2.75 seconds
+	Linear Probe:		2.54 seconds
+	Quadratic Probe:	2.48 seconds
 
 ANALYSIS:
-	For the most part, 
+	The open addressing approaches were definitely the fastest, and the trees were blown away. This led to me choosing the Quadratic probing method as my HashMap.java
 
 
 
