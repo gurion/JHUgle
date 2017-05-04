@@ -7,7 +7,7 @@ import com.github.phf.jb.Bee;
 import java.util.Random;
 
 /**
- * Compare performance of ArrayMap String, and ListMap.String, 
+ * Compare performance of ArrayMap String, and ListMap.String,
  *
  * Sadly the code here is a tad bit messy since there's no elegant way to
  * instantiate and initialize a number of different set implementations.
@@ -24,18 +24,30 @@ public final class AVLBench {
     // to allow combining them.
 
     // Insert a number of "consecutive" strings into the given set.
+    /**
+    * Javadoc Checkstyle.
+    * @param m Map.
+    */
     private static void insertLinear(Map<Integer, Integer> m) {
         for (int i = 0; i < SIZE; i++) {
             m.insert(i, i);
         }
     }
 
+    /**
+    * Javadoc Checkstyle.
+    * @param ra array.
+    */
     private static void fillArray(int[] ra) {
         for (int i = 0; i < SIZE; i++) {
             ra[i] = i;
         }
     }
 
+    /**
+    * Javadoc Checkstyle.
+    * @param ra array.
+    */
     private static void makeRandomArray(int[] ra) {
         for (int i = 0; i < SIZE; i++) {
             int temp = ra[i];
@@ -46,6 +58,11 @@ public final class AVLBench {
     }
 
     // Insert a number of "random" strings into the given set.
+    /**
+    * Javadoc Checkstyle.
+    * @param ra array.
+    * @param m map.
+    */
     private static void insertRandom(Map<Integer, Integer> m, int[] rand) {
         for (int i = 0; i < SIZE; i++) {
             m.insert(rand[i], i);
@@ -53,12 +70,20 @@ public final class AVLBench {
     }
 
     // Remove a number of "random" strings from the given set.
+    /**
+    * Javadoc Checkstyle.
+    * @param ra array.
+    * @param m map.
+    */
     private static void removeRandom(Map<Integer, Integer> m, int[] rand) {
         for (int i = 0; i < SIZE; i++) {
             m.remove(rand[i]);
         }
     }
-
+    /**
+    * Javadoc Checkstyle.
+    * @param m Map.
+    */
     private static void removeLinear(Map<Integer, Integer> m) {
         for (int i = 0; i < SIZE; i++) {
             m.remove(i);
@@ -66,6 +91,10 @@ public final class AVLBench {
     }
 
     // Lookup a number of "consecutive" strings in the given set.
+    /**
+    * Javadoc Checkstyle.
+    * @param m Map.
+    */
     private static void lookupLinear(Map<Integer, Integer> m) {
         for (int i = 0; i < SIZE; i++) {
             boolean x = m.has(i);
@@ -73,18 +102,32 @@ public final class AVLBench {
     }
 
     // Lookup a number of "random" strings in the given set.
+    /**
+    * Javadoc Checkstyle.
+    * @param ra array.
+    * @param m map.
+    */    
     private static void lookupRandom(Map<Integer, Integer> m, int[] rand) {
         for (int i = 0; i < SIZE; i++) {
             boolean x = m.has(rand[i]);
         }
     }
 
+    /**
+    * Javadoc Checkstyle.
+    * @param m Map.
+    */
     private static void getLinear(Map<Integer, Integer> m) {
         for (int i = 0; i < SIZE; i++) {
             int x = m.get(i);
         }
     }
 
+    /**
+    * Javadoc Checkstyle.
+    * @param ra array.
+    * @param m map.
+    */
     private static void getRandom(Map<Integer, Integer> m, int[] rand) {
         for (int i = 0; i < SIZE; i++) {
             int x = m.get(rand[i]);
