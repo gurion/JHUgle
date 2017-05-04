@@ -35,7 +35,7 @@ OVERVIEW:
 		Several interfaces and exceptions may also be found in this 
 		directory
 
-		See git log for individual contribution.
+		See gitlog.txt for individual contribution.
 
 INCREMENTAL DESIGN AND PARTNER PROGRAMMING:
 	Front End:
@@ -76,12 +76,16 @@ INCREMENTAL DESIGN AND PARTNER PROGRAMMING:
 		these two, I also tested with map test base and a specific 
 		tester for the growing and toString. I benchmarked the same 
 		way.
-		I had a draft for double hashing, but did not finish it, so I did not include it here. I would assume that it would be the fastest of all, as I was using an array with buckets as Linear Probe Hash Maps.
+		I had a draft for double hashing, but did not finish it, so 
+		I did not include it here. I would assume that it would be 
+		the fastest of all, as I was using an array with buckets as 
+		Linear Probe Hash Maps.
+		
 		Data found below.
 
 DATA:
 
-Benchmark:
+Benchmarks:
 
 Size = 300
 Run 3 times, results stable to a few hundred ns/op.
@@ -151,7 +155,22 @@ The average of 5 trials was taken for each.
 	Quadratic Probe:	2.48 seconds
 
 ANALYSIS:
-	The open addressing approaches were definitely the fastest, and the trees were blown away. This led to me choosing the Quadratic probing method as my HashMap.java
+	The open addressing approaches were definitely the fastest, and 
+	the trees were blown away. This led to me choosing the Quadratic 
+	probing method as my HashMap.java
+
+	The inserts for whatever reason took longer than the other 
+	operations, but were still far faster than any tree operations. 
+
+	Across the board, the quadratic probing was the fastest, I would 
+	expect this to be a result of fewer collisions and less 
+	clustering.
+
+	When I played around with the size for the benchmarks, they changed
+	speed by a linear factor. This makes sense as they are doing more
+	work, and each operation is constant time. Thus more operations 
+	should increase time by a constant factor.
+
 
 
 
