@@ -1,0 +1,511 @@
+commit a89840c945deeb1174b3783885f8caba31a2f666
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 20:28:14 2017 -0400
+
+    Actually now finished README, started checkstyling benchmarks but i dont thinkt hey need to be so I'm not gonna
+
+commit e502f4fa64f04dbf21d84e596cdf78ebab222fd6
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 20:20:54 2017 -0400
+
+    Complete README
+
+commit 505106eff55dd6425c8a7b030b5e52dbebf430c0
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 18:50:44 2017 -0400
+
+    HashMap fixed
+
+commit c75448ec00db0d7a6cbbdd76fb94ff32fca98214
+Merge: deadb30 0d8d648
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 18:45:58 2017 -0400
+
+    Merge branch 'master' of https://bitbucket.org/gurion/jhugle
+
+commit 0d8d64835c648009c7685a11c16f6af0cb89748a
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 20:10:13 2017 -0400
+
+    Finished README
+
+commit 52f59bdd4c024d2b88029594a985a566ef5ea495
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 19:56:01 2017 -0400
+
+    Chose QP, added README, added Trees
+
+commit deadb30b6f63b7840935c770631876c31e3ed90f
+Merge: af8ca78 52f59bd
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 18:32:22 2017 -0400
+
+    Merge branch 'master' of https://bitbucket.org/gurion/jhugle
+
+commit af8ca78776396dd6e520f2ea14c2e65f2182ab3c
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 18:32:17 2017 -0400
+
+    .
+
+commit 3a277f3645742e1b4baed0346b68ad85f0ecde84
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 18:01:55 2017 -0400
+
+    fixed JHUgle, checkstyle for everything
+
+commit 45970b40b39098feb4566ecd5dff51ccc61a0673
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 17:41:43 2017 -0400
+
+    fix to string methods and tests
+
+commit 5c700d724c862dd40c8230b132fbffd15c00d420
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 17:32:45 2017 -0400
+
+    got rid of complexity, uncommented toString
+
+commit b894b3e8a2a5f3447ae2fc870cf266d95a3bfa7c
+Merge: 2961eda 3a277f3
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 16:37:45 2017 -0400
+
+    Merge branch 'master' of https://bitbucket.org/gurion/jhugle
+
+commit af2c0028b19c6ee21b334852d483ef3b0b4a6902
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 16:19:44 2017 -0400
+
+    toString for hashMaps
+
+commit 2961eda488d0e0d00fd78b17d0d3a95c83aa5c90
+Merge: ddd9139 45970b4
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 16:17:29 2017 -0400
+
+    Merge branch 'master' of https://bitbucket.org/gurion/jhugle
+
+commit ddd9139593842b9a39726030c3fc6749a930b800
+Merge: d83dcb8 5c700d7
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 16:08:37 2017 -0400
+
+    Merge branch 'master' of https://bitbucket.org/gurion/jhugle
+
+commit d87991e18a1cfaf740bcaaecff7255bea9661fea
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 15:58:54 2017 -0400
+
+    JHUgle checkstyle, working on complexity
+
+commit d83dcb84ae3d62409bf1e3cdef8e051f56422f86
+Merge: 55658d4 af2c002
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 15:05:59 2017 -0400
+
+    Merge branch 'master' of https://bitbucket.org/gurion/jhugle
+
+commit 55658d44ba959b0c33e68d7dd1b76ca5921281c7
+Merge: 1503142 d87991e
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 15:05:40 2017 -0400
+
+    trash
+
+commit f8a910bba01ad928fe18ec8056c71daa2fa516b2
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 14:53:59 2017 -0400
+
+    jhugle error messages and other checkstyling
+
+commit 1503142f31960569529e97febfb4f15d8e788213
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 14:46:05 2017 -0400
+
+    throw out
+
+commit 9537564ebc5faaf5ef93abd41e0655f985a31da2
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 13:31:46 2017 -0400
+
+    checkstyle hashmaps
+
+commit 3774d81609c862449349e649f3da980a5091b66c
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 14:39:42 2017 -0400
+
+    checks
+
+commit 28d978fc1da97a127687f15517781b293999b351
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 13:20:08 2017 -0400
+
+    Iterators
+
+commit 82404512bc0712da6dd9771fd4ce1f388f688e1c
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 12:59:20 2017 -0400
+
+    other tests
+
+commit 778ac7640033e026fa364e94cf95196615c852c9
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 12:39:31 2017 -0400
+
+    rehash tests for all
+
+commit 6e3ca0c92b7c25fb8f71b71457d65824b93bd51b
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 12:30:57 2017 -0400
+
+    add test
+
+commit 5dcdd3cb6cf13b273b6cf9903adfbb96fa1893c1
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 12:25:46 2017 -0400
+
+    test rehash
+
+commit 2c9c14142fa48ac49168fa8f22907f2f40941e05
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 11:52:46 2017 -0400
+
+    load
+
+commit 373f5daf8ae919999e1da1e19bc0a3aed081cf06
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 11:48:43 2017 -0400
+
+    benchmarks are funky
+
+commit b325b9539f64e71a1f11966a8533fa6c25f1b673
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 10:58:05 2017 -0400
+
+    Checkstyle, JHUgle still has complexity errors
+
+commit 2ca3624b3a11de94575e08bb3b28d86a55906202
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 10:54:58 2017 -0400
+
+    QP works
+
+commit 7c185a76d82628763532576af98b4d2cff704376
+Merge: fb437c2 cf544e7
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 10:49:22 2017 -0400
+
+    not sure what needs to be committed on this end but to fix conflicts, use version coming from lubuntu
+
+commit fb437c2b970583438fc258c55206d6d59c5a43e0
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 10:48:11 2017 -0400
+
+    dont use this commit
+
+commit cf544e75f9c6ff6815a0a7fb71cae8af1f6bcb55
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 10:44:54 2017 -0400
+
+    fixed quadratic, checkstyle
+
+commit 010121ea3629983c0ef3dfca965642f2562b861a
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 03:35:18 2017 -0400
+
+    Working on QPHM
+
+commit 26812e2c0d292f50f8ebf801436851c3022026c3
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 03:16:05 2017 -0400
+
+    quadratic probe hash map
+
+commit 763ee42ece1c5c0ff5af28dbf830b578f036e9b2
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 03:07:14 2017 -0400
+
+    fixed benches and headers, did some renaming
+
+commit 29c7d19647075d7caae1d51a186db8e61af33bbd
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 02:52:12 2017 -0400
+
+    LPHM seems to work, bench throwing exception for random put
+
+commit 024b88cd5f94e9db255b0c107c0b706bb7e90979
+Merge: 53afd87 081e6b1
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 02:38:09 2017 -0400
+
+    trouble merging
+
+commit 53afd870a47f5d0706f1d2657d2137ab29996c4d
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 02:36:49 2017 -0400
+
+    fixed Linear Probe. next move to quadratic, then double hash
+
+commit 040f0f96e9a980d232d2ff624a553a2af366cab4
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 02:24:52 2017 -0400
+
+    Trying to fix linear probe, seems to be remove issue
+
+commit 081e6b17a725eb07a5f8495f83bbe4d373b7d8a0
+Merge: fc0ce90 d315ddb
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Wed May 3 02:17:29 2017 -0400
+
+    Merge branch 'master' of https://bitbucket.org/gurion/jhugle
+
+commit d315ddbb71eef6286c2dd3f9ab80a6ec6d2897d6
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Wed May 3 02:16:23 2017 -0400
+
+    fixed JHUgle.java
+
+commit 1e11ad8b9afab40e990cc5d1e50afe6ef07a81c0
+Merge: 791fa8a b5f09ad
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Wed May 3 02:14:59 2017 -0400
+
+    Merge branch 'master' of https://bitbucket.org/gurion/jhugle
+
+commit fc0ce9029cb31cc1675bbc9c58cc6edf455e490e
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Wed May 3 02:10:55 2017 -0400
+
+    fixed some errors
+
+commit b5f09adac98760e251eb6fcad4e871ce7f1d817f
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 02:04:03 2017 -0400
+
+    data array allocation/casting thingy
+
+commit 791fa8a0de37914e1c2b8da718ff6187a52ce865
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Wed May 3 02:01:57 2017 -0400
+
+    reverted back to original
+
+commit 2142bc14ed5bfd9269e8ae6c17e0739f58c1985d
+Author: Gurion <gurion@jhu.edu>
+Date:   Wed May 3 02:01:06 2017 -0400
+
+    fixing array allocation
+
+commit fc9f2f499298c58294a112b62e17a4b50defda8c
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Wed May 3 01:43:13 2017 -0400
+
+    edited readme
+
+commit 1568474da7ea56ad194408feced98e3748c0a151
+Merge: a55f151 ae348aa
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 01:41:19 2017 -0400
+
+    Merge branch 'master' of https://bitbucket.org/gurion/jhugle
+
+commit a55f1516af091888832016f5011bab089e64728e
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Wed May 3 01:41:10 2017 -0400
+
+    Wrote linear probe hash map. Need to fix toString. Need to Test. Compiles.
+
+commit ae348aa9701a69e21bc085f4d74cb63df5d1e835
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Wed May 3 01:37:29 2017 -0400
+
+    finished headers
+
+commit 3be0dd8a51e4220cf9d9bda36d8a36a2ab733745
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Wed May 3 01:31:43 2017 -0400
+
+    starting headers
+
+commit d1c7db83f64399e1d2915d5328195ac132b4e3f5
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Wed May 3 01:22:48 2017 -0400
+
+    fixed cyclomatic complexities
+
+commit 8e2fbe5c72446356da8a0874951c92bf3cf6f428
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Wed May 3 00:59:49 2017 -0400
+
+    checkstyled everything but jhugle
+
+commit 1a697aec83485ed606ccf33305b79622499db5af
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Tue May 2 23:07:05 2017 -0400
+
+    added put functions to bench
+
+commit 9695756f803cd7bb881fd33dc553f8881b0036bf
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Tue May 2 22:50:13 2017 -0400
+
+    added linear probe benchmark
+
+commit 66032b61cf7d2202d2f0c791660acca52bdb9208
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Tue May 2 22:44:16 2017 -0400
+
+    Chain Benchmark
+
+commit 8949dd447a53083a6ef9f4d2340e29fb48377aa5
+Author: Gurion <gurion@jhu.edu>
+Date:   Tue May 2 22:27:09 2017 -0400
+
+    checkstyle and load test
+
+commit d7bb9f9076b38286768bcb8b8598fc865b479f5c
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Tue May 2 21:45:41 2017 -0400
+
+    add xtime
+
+commit 48f0cd7f73613d51f2f84ec4051767cbbcbfcf11
+Author: Gurion <gurion@jhu.edu>
+Date:   Tue May 2 21:43:33 2017 -0400
+
+    Chaining Hashmap works
+
+commit f1251c4b1745abdf92f1c2e2f7df57bb30ead046
+Merge: c1694af 24143fb
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Tue May 2 21:04:08 2017 -0400
+
+    Merge branch 'master' of https://bitbucket.org/gurion/jhugle
+
+commit c1694af12ab8479e2bb5cb5bcff1ff3e866b59a2
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Tue May 2 21:03:57 2017 -0400
+
+    update Test Base
+
+commit 24143fbde4c2c9ccfc743985457e7221eb830607
+Author: Gurion <gurion@jhu.edu>
+Date:   Tue May 2 20:52:18 2017 -0400
+
+    ChainHashMap passes tests, need to test further and test in JHUgle
+
+commit 5081bc0f8910406e4e921d71bb0c2adbf7a202c7
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Tue May 2 19:21:47 2017 -0400
+
+    ChainHash compiles
+
+commit f861488c7b1fe03f5333c13d4a26a8e9beab433d
+Author: Gurion <gurion@jhu.edu>
+Date:   Tue May 2 00:31:51 2017 -0400
+
+    remove helper
+
+commit 42998a18d8e879199cb3c98332bbc74fb70211cb
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Tue May 2 00:30:01 2017 -0400
+
+    I just undid all that because it broke JHUgle and it was only 2 errors oh well can figure out if need be.
+
+commit adae5492afeba5d5fc8d491220f8823a137398c4
+Author: Gurion <gurion@jhu.edu>
+Date:   Tue May 2 00:11:58 2017 -0400
+
+    I fixed checkstyle for now
+
+commit 04b9e6b8ea8d7751077f4a76a459b7191df8ea68
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Tue May 2 00:03:41 2017 -0400
+
+    fixed checkstyle
+
+commit 095d3b6465588432485135a5a64b5c656612d3e6
+Author: Gurion <gurion@jhu.edu>
+Date:   Mon May 1 23:31:40 2017 -0400
+
+    checkstyle. fix JHUgle complexity and NPath
+
+commit 3d51a232b7ddcfbe999192a6e98924e4e343e930
+Author: Gurion <gurion@jhu.edu>
+Date:   Mon May 1 22:54:59 2017 -0400
+
+    Checkstyle for JHUgle. was being a serious  bitch. Need to fix cyclomatic complexity and Npath. Comment indentation things being annoying.
+
+commit 2dcababa3f66ad29b4b158c146fd3d4f92b053a5
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Mon May 1 22:15:15 2017 -0400
+
+    JHUgle carrot thing still need to fix but is functional, using AVL, need to hashmap and make sure still works
+
+commit bba70d8951a24eb73d2c0a6c611b1f5a9e5c107e
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Mon May 1 19:05:13 2017 -0400
+
+    JHUgle mostly done
+
+commit fbfa909c8aa288133fec35724b8b8f97a64763d4
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Mon May 1 18:33:33 2017 -0400
+
+    JHUgle first draft
+
+commit 62537cbf8fb62b830560a65f67531782c929d940
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Mon May 1 14:01:37 2017 -0400
+
+    finished JHUgle.java using scanners
+
+commit 0bc926127fecb3ca1f039a04659cc27572f4103e
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Sun Apr 30 23:14:35 2017 -0400
+
+    JHUgle
+
+commit c621982fc66ef38460a0ce37f491b811eda26215
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Mon Apr 24 14:31:25 2017 -0400
+
+    linear probe, update JHUgle
+
+commit c09653272ab7813a1dfb154e84e67d267305a7c4
+Merge: 52f2f8e c3d8b3d
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Sun Apr 23 22:17:19 2017 -0400
+
+    Merge branch 'master' of https://bitbucket.org/gurion/jhugle
+
+commit 52f2f8ecc2789a7b480b998c66cd7bb3e7cce61d
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Sun Apr 23 22:17:10 2017 -0400
+
+    iterator
+
+commit c3d8b3d960a6621fb1b55475d6e7423e410b35a8
+Author: Angelica Walker <angiewalker@jhu.edu>
+Date:   Sun Apr 23 21:55:37 2017 -0400
+
+    began writing JHUgle.java
+
+commit a4822c19cdd4f8531ab47f5e8d2010508a002147
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Sun Apr 23 21:05:18 2017 -0400
+
+    Chaining
+
+commit 13e286e8befda60b51a676f2b090a6ca4ff09b6a
+Author: Gurion Marks <gurion@jhu.edu>
+Date:   Sun Apr 23 19:51:29 2017 -0400
+
+    Map interfaces
+
+commit 82af856a74b0540932ab786138e9b4af4a718dd5
+Author: Gurion Marks <gmarks2@jhu.edu>
+Date:   Sun Apr 23 19:06:12 2017 +0000
+
+    README created online with Bitbucket

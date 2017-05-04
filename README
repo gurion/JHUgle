@@ -35,10 +35,10 @@ OVERVIEW:
 		Several interfaces and exceptions may also be found in this 
 		directory
 
-		See gitlog.txt for individual contribution.
+	See gitlog.txt for individual contribution.
 
-		NOTE: AVL and Treap benchmarks are not checkstyle compliant,
-				but I dont think they need to be.
+	NOTE: AVL and Treap benchmarks are not checkstyle compliant,
+		but I dont think they need to be.
 
 INCREMENTAL DESIGN AND PARTNER PROGRAMMING:
 	Front End:
@@ -139,7 +139,7 @@ removeRandomAVL	        20,000	        61,806 ns/op
 
    getLinearTreap	   100,000	        25,441 ns/op	
    getRandomTreap       50,000	        31,433 ns/op	
-insertLinearTrea        20,000	        64,484 ns/op	         
+insertLinearTreap       20,000	        64,484 ns/op	         
 insertRandomTreap       20,000	        95,843 ns/op	        
 lookupLinearTreap	   100,000	        22,962 ns/op	
 lookupRandomTreap	    50,000	        29,254 ns/op	
